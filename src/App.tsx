@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import Carrinho from './pages/Carrinho';
 import CompraConfirmada from './pages/CompraConfirmada';
 import Home from './pages/Home';
+import { GlobalStyle } from './styles/global';
 import { theme } from './styles/theme';
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <GlobalStyle></GlobalStyle>
     </ThemeProvider>
   )
 }
