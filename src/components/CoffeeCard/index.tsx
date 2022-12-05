@@ -1,7 +1,8 @@
-import { Minus, Plus, ShoppingCart } from "phosphor-react";
+import { ShoppingCart } from "phosphor-react";
 import { useState } from "react";
-import { BuyButton, Card, CardActions, CoffeeCounter, CoffeeDescription, CoffeeImage, CoffeeTitle, CoffeeType, CoffeeTypes, CoffeeValue } from "./styles";
+import { BuyButton, Card, CardActions, CoffeeDescription, CoffeeImage, CoffeeTitle, CoffeeType, CoffeeTypes, CoffeeValue } from "./styles";
 import {theme} from '../../styles/theme';
+import Counter from "../Counter";
 
 interface CoffeeCardProps {
     src: string;
@@ -38,15 +39,7 @@ const CoffeeCard = ({src, types, title, description, value}: CoffeeCardProps) =>
             <CoffeeDescription>{description}</CoffeeDescription>
             <CardActions>
                 <CoffeeValue>R$ <span>{value}</span></CoffeeValue>
-                <CoffeeCounter>
-                    <button disabled={counter == 1 ? true : false} onClick={decreaseCounter}>
-                        <Minus size={14} weight="fill" color={theme.purple}/>
-                    </button>
-                    <span>{counter}</span>
-                    <button onClick={increaseCounter}>
-                        <Plus size={14} weight="fill" color={theme.purple}/>
-                    </button>
-                </CoffeeCounter>
+                <Counter counterValue={counter} onIncrease={increaseCounter} onDecrease={decreaseCounter}></Counter>
                 <BuyButton>
                     <ShoppingCart size={22} weight="fill" color={theme.white} />
                 </BuyButton>
