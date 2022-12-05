@@ -6,7 +6,7 @@ export const HomeWrapper = styled.main`
     background-size: cover;
 `
 
-export const HomeContainer = styled.div`
+export const IntroContainer = styled.section`
     display: grid;
     grid-template-columns: 2fr 1fr;
     padding: 5rem 0;
@@ -25,7 +25,7 @@ export const Title = styled.h1`
     margin-bottom: 1rem;
 `
 
-export const SubTitle = styled.h2`
+export const SubTitle = styled.p`
     font-family: 'Roboto', sans-serif;
     font-size: 1.25rem;
     font-weight: 400;
@@ -73,4 +73,19 @@ export const IntroImg = styled.img`
     @media (max-width: 1024px){
         display: none;
     }
+`
+
+export const SectionTitle = styled.h2`
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: ${props => props.theme["base-subtitle"]} ;
+    margin-bottom: 2rem;
+`
+
+export const CoffeList = styled.section`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem ;
+    margin-bottom: 4rem;
 `

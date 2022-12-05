@@ -1,14 +1,34 @@
 import Container from "../../components/Container";
-import { HomeContainer, HomeWrapper, IntroImg, Item, ItemsContainer, SubTitle, Title } from "./styles";
+import { IntroContainer, HomeWrapper, IntroImg, Item, ItemsContainer, SubTitle, Title, SectionTitle, CoffeList } from "./styles";
 import IntroImage from '../../assets/cafe_banner_home.svg';
 import { Coffee, Package, ShoppingCart, Timer } from "phosphor-react";
 import { theme } from '../../styles/theme';
+import expressoTrad from '../../assets/expresso.svg';
+import CoffeeCard from "../../components/CoffeeCard";
+
+interface Coffee{
+    src: string;
+    types: string[];
+    title: string;
+    description: string;
+    value: string;
+}
+
+const COFFEE_DATA: Coffee[] = [
+    {   
+        src: expressoTrad,
+        types: ['Tradicional'],
+        title: 'Expresso Tradicional',
+        description: 'O tradicional café feito com água quente e grãos moídos',
+        value: '9,90'
+    }
+]
 
 const Home = () => {
     return (
         <HomeWrapper>
             <Container>
-                <HomeContainer>
+                <IntroContainer>
                     <div>
                         <Title>Encontre o café perfeito para qualquer hora do dia</Title>
                         <SubTitle>Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora</SubTitle>
@@ -40,7 +60,16 @@ const Home = () => {
                         </ItemsContainer>
                     </div>
                     <IntroImg src={IntroImage} alt='Um copo de café com grãos de café atrás'></IntroImg>
-                </HomeContainer>
+                </IntroContainer>
+                <main>
+                    <SectionTitle>Nossos cafés</SectionTitle>
+                    <CoffeList>
+                        {
+                            COFFEE_DATA.map( (coffee, i) => 
+                                <CoffeeCard {...coffee} key={`coffee_${i}`}></CoffeeCard>)
+                        }
+                    </CoffeList>
+                </main>
             </Container>
         </HomeWrapper>
     )
