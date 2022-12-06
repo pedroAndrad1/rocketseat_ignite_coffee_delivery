@@ -2,8 +2,12 @@ import { NavLink } from "react-router-dom";
 import { CarrinhoAmount, CarrinhoContainer, HeaderContainer, Location } from "./styles";
 import logo from '../../assets/logo.svg';
 import { MapPin, ShoppingCart } from "phosphor-react";
+import { useCarrinhoContext } from "../../contexts/CarrinhoContext";
 
 const Header = () => {
+
+    const {carrinho} = useCarrinhoContext()
+
     return (
         <HeaderContainer>
             <NavLink to="/">
@@ -17,7 +21,9 @@ const Header = () => {
                 <NavLink to="/carrinho">
                     <CarrinhoContainer>
                         <ShoppingCart size={22} weight="fill" color="#DBAC2C" />
-                        <CarrinhoAmount>5</CarrinhoAmount>
+                       {
+                        carrinho.length > 0 &&  <CarrinhoAmount>{carrinho.length}</CarrinhoAmount>
+                       }
                     </CarrinhoContainer>
                 </NavLink>
             </div>

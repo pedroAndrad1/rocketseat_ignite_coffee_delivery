@@ -3,6 +3,8 @@ import { useState } from "react";
 import { BuyButton, Card, CardActions, CoffeeDescription, CoffeeImage, CoffeeTitle, CoffeeType, CoffeeTypes, CoffeeValue } from "./styles";
 import {theme} from '../../styles/theme';
 import Counter from "../Counter";
+import { useCarrinhoContext } from "../../contexts/CarrinhoContext";
+import { Coffee } from "../../data/coffee-data";
 
 interface CoffeeCardProps {
     src: string;
@@ -13,7 +15,7 @@ interface CoffeeCardProps {
 }
 
 const CoffeeCard = ({src, types, title, description, value}: CoffeeCardProps) =>{
-
+    const {adicionar} = useCarrinhoContext()
     const [counter, setCounter] = useState(1);
 
     const decreaseCounter = () => {
@@ -24,7 +26,10 @@ const CoffeeCard = ({src, types, title, description, value}: CoffeeCardProps) =>
         setCounter(state => state + 1);
     }
 
-    
+    const addToCarrinho = () => {
+        const coffee: Coffee = {src,types,title,description,value}
+        adicionar(coffee, counter);
+    }
     
 
     return(
@@ -41,7 +46,7 @@ const CoffeeCard = ({src, types, title, description, value}: CoffeeCardProps) =>
                 <CoffeeValue>R$ <span>{value}</span></CoffeeValue>
                 <Counter counterValue={counter} onIncrease={increaseCounter} onDecrease={decreaseCounter}></Counter>
                 <BuyButton>
-                    <ShoppingCart size={22} weight="fill" color={theme.white} />
+                    <ShoppingCart size={22} weight="fill" color={theme.white} onClick={() => addToCarrinho()}/>
                 </BuyButton>
             </CardActions>
         </Card>
