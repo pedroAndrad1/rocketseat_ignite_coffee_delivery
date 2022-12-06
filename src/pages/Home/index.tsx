@@ -3,69 +3,52 @@ import { IntroContainer, HomeWrapper, IntroImg, Item, ItemsContainer, SubTitle, 
 import IntroImage from '../../assets/cafe_banner_home.svg';
 import { Coffee, Package, ShoppingCart, Timer } from "phosphor-react";
 import { theme } from '../../styles/theme';
-import expressoTrad from '../../assets/expresso.svg';
 import CoffeeCard from "../../components/CoffeeCard";
+import { COFFEE_DATA } from '../../data/coffee-data';
 
-interface Coffee{
-    src: string;
-    types: string[];
-    title: string;
-    description: string;
-    value: string;
-}
-
-const COFFEE_DATA: Coffee[] = [
-    {   
-        src: expressoTrad,
-        types: ['Tradicional'],
-        title: 'Expresso Tradicional',
-        description: 'O tradicional café feito com água quente e grãos moídos',
-        value: '9,90'
-    }
-]
 
 const Home = () => {
     return (
         <HomeWrapper>
+            <IntroContainer>
+                <Container>
+                    <Title>Encontre o café perfeito para qualquer hora do dia</Title>
+                    <SubTitle>Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora</SubTitle>
+                    <ItemsContainer>
+                        <Item iconContainerColor={theme["yellow-dark"]}>
+                            <span>
+                                <ShoppingCart size={16} weight="fill" color="#FFFFFF" />
+                            </span>
+                            <p>Compra simples e segura</p>
+                        </Item>
+                        <Item iconContainerColor={theme["base-text"]}>
+                            <span>
+                                <Package size={16} weight="fill" color="#FFFFFF" />
+                            </span>
+                            <p>Embalagem mantém o café intacto</p>
+                        </Item>
+                        <Item iconContainerColor={theme.yellow}>
+                            <span>
+                                <Timer size={16} weight="fill" color="#FFFFFF" />
+                            </span>
+                            <p>Entrega rápida e rastreada</p>
+                        </Item>
+                        <Item iconContainerColor={theme.purple}>
+                            <span>
+                                <Coffee size={16} weight="fill" color="#FFFFFF" />
+                            </span>
+                            <p>O café chega fresquinho até você</p>
+                        </Item>
+                    </ItemsContainer>
+                </Container>
+                <IntroImg src={IntroImage} alt='Um copo de café com grãos de café atrás'></IntroImg>
+            </IntroContainer>
             <Container>
-                <IntroContainer>
-                    <div>
-                        <Title>Encontre o café perfeito para qualquer hora do dia</Title>
-                        <SubTitle>Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora</SubTitle>
-                        <ItemsContainer>
-                            <Item iconContainerColor={theme["yellow-dark"]}>
-                                <span>
-                                    <ShoppingCart size={16} weight="fill" color="#FFFFFF" />
-                                </span>
-                                <p>Compra simples e segura</p>
-                            </Item>
-                            <Item iconContainerColor={theme["base-text"]}>
-                                <span>
-                                    <Package size={16} weight="fill" color="#FFFFFF" />
-                                </span>
-                                <p>Embalagem mantém o café intacto</p>
-                            </Item>
-                            <Item iconContainerColor={theme.yellow}>
-                                <span>
-                                    <Timer  size={16} weight="fill" color="#FFFFFF" />
-                                </span>
-                                <p>Entrega rápida e rastreada</p>
-                            </Item>
-                            <Item iconContainerColor={theme.purple}>
-                                <span>
-                                    <Coffee size={16} weight="fill" color="#FFFFFF" />
-                                </span>
-                                <p>O café chega fresquinho até você</p>
-                            </Item>
-                        </ItemsContainer>
-                    </div>
-                    <IntroImg src={IntroImage} alt='Um copo de café com grãos de café atrás'></IntroImg>
-                </IntroContainer>
                 <main>
                     <SectionTitle>Nossos cafés</SectionTitle>
                     <CoffeList>
                         {
-                            COFFEE_DATA.map( (coffee, i) => 
+                            COFFEE_DATA.map((coffee, i) =>
                                 <CoffeeCard {...coffee} key={`coffee_${i}`}></CoffeeCard>)
                         }
                     </CoffeList>

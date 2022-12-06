@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
 export const HomeWrapper = styled.main`
-    background-image: url('src/assets/intro_background.svg'); 
-    background-repeat: no-repeat;
-    background-size: cover;
 `
 
 export const IntroContainer = styled.section`
+    background-image: url('src/assets/intro_background.svg'); 
+    background-repeat: no-repeat;
+    background-size: cover;
     display: grid;
     grid-template-columns: 2fr 1fr;
     padding: 5rem 0;
-
+    
     @media (max-width: 1024px){
         grid-template-columns: 1fr;
     }
@@ -42,7 +42,6 @@ export const ItemsContainer = styled.div`
     font-weight: 400;
     color: ${props => props.theme["base-text"]};
     gap: 1rem ;
-    
 `
 interface ItemProps{
     iconContainerColor: string;
@@ -85,7 +84,14 @@ export const SectionTitle = styled.h2`
 
 export const CoffeList = styled.section`
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: 1rem ;
     margin-bottom: 4rem;
+
+    @media (min-width: 1024px){
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1440px){
+        grid-template-columns: repeat(4, 1fr);
+    }
 `

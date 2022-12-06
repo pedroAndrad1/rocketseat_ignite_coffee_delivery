@@ -4,14 +4,17 @@ export const Card = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
     background-color: ${props => props.theme["base-card"]};
     border-radius: 6px 36px;
     padding: 0 1rem 1rem 1rem;
+    position: relative;
+    gap: 1rem ;
+    min-width: 256px;
 `
 
 export const CoffeeImage = styled.img`
     margin-top: -1rem;
-    margin-bottom: 1rem;
 `
 
 export const CoffeeTypes = styled.div`
@@ -19,7 +22,6 @@ export const CoffeeTypes = styled.div`
     align-items: center;
     justify-content: center;
     gap: 0.25rem ;
-    margin-bottom: 1rem;
 `
 
 export const CoffeeType = styled.span`
@@ -40,6 +42,7 @@ export const CoffeeTitle = styled.h3`
     line-height: 130%;
     margin-bottom: 1rem;
     text-align: center;
+    white-space: nowrap;
 `
 
 export const CoffeeDescription = styled.p`
@@ -49,14 +52,14 @@ export const CoffeeDescription = styled.p`
     font-size: 0.9rem;
     line-height: 130%;
     text-align: center;
-    margin-bottom: 2rem;
 `
 
 export const CardActions = styled.div`
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
-    gap: 0.25rem ;
+    gap: 0.5rem ;
     width: 100%;
+    margin-top: 1rem;
 `
 
 export const CoffeeValue = styled.span`
