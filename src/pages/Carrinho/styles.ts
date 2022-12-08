@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const CarrinhoWrapper = styled.main`
+export const CarrinhoForm = styled.form`
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 2rem;
@@ -63,7 +63,7 @@ export const SelectedCoffees = styled.div`
   background-color: ${(props) => props.theme["base-card"]};
 `;
 
-export const FormGrid = styled.form`
+export const EnderecoGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   gap: 0.5rem;
@@ -108,3 +108,28 @@ export const Input = styled.input<InputProps>`
     grid-column-end: 16;
   }
 `;
+
+interface ErrorMessageProps {
+  startColumn?: number;
+  endColumn?: number;
+  startRow?: number;
+  endRow?: number;
+}
+
+export const ErrorMessage = styled.span<ErrorMessageProps>`
+  font-family: 'Roboto', sans-serif;
+  color: red;
+  font-size: 0.75rem ;
+
+  grid-column-start: ${(props) => props.startColumn};
+  grid-column-end: ${(props) => props.endColumn};
+  grid-row-start: ${(props) => props.startRow};
+  grid-row-end: ${(props) => props.endRow};
+
+  
+  @media (max-width: 600px){
+    grid-column-start:1;
+    grid-column-end: 16;
+  }
+
+`
