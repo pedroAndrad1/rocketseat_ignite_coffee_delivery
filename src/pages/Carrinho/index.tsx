@@ -1,7 +1,7 @@
-import { MapPinLine } from "phosphor-react";
+import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from "phosphor-react";
 import Container from "../../components/Container";
 import { theme } from "../../styles/theme";
-import { BoxDescription, BoxTitle, CarrinhoForm, DadosContainer, DescriptionBoxContainer, EnderecoBox, EnderecoGrid, ErrorMessage, Input, SelectedCoffees, SelectedCoffeesContainer, SubTitle } from "./styles";
+import { Box, BoxDescription, BoxDescriptionContainer, BoxTitle, CarrinhoForm, DadosContainer, EnderecoGrid, ErrorMessage, FormaDePagamento, FormasDePagamentoList, Input, SelectedCoffees, SelectedCoffeesContainer, SubTitle } from "./styles";
 import useCorreios from '../../custom-hooks/useCorreios';
 import { useState } from "react";
 
@@ -16,33 +16,60 @@ const Carrinho = () => {
     const [bairro, setBairro] = useState('');
     const [cidade, setCidade] = useState('');
     const [uf, setUf] = useState('');
+    const [credito, setCredito] = useState(true);
+    const [debito, setDebito] = useState(false);
+    const [dinheiro, setDinheiro] = useState(false);
 
-    const updateCep = (cepValue: string) =>{
+    const updateCep = (cepValue: string) => {
         setCep(cepValue);
-        if(cepValue.length == 8){            
+        if (cepValue.length == 8) {
             findByCep(cepValue)
-            .then(res => {
-                if (!res || res.erro) {
-                    setCepInvalido(true);
-                }
-                else {
-                    setRua(res.logradouro);
-                    setBairro(res.bairro);
-                    setCidade(res.localidade);
-                    setUf(res.uf);
-                    setCepInvalido(false);
-                }
-            })
+                .then(res => {
+                    if (!res || res.erro) {
+                        setCepInvalido(true);
+                    }
+                    else {
+                        setRua(res.logradouro);
+                        setBairro(res.bairro);
+                        setCidade(res.localidade);
+                        setUf(res.uf);
+                        setCepInvalido(false);
+                    }
+                })
         }
-        else{
+        else {
             setCepInvalido(false);
         }
 
-        if(cepValue.length == 0){
+        if (cepValue.length == 0) {
             setRua('');
             setBairro('');
             setCidade('');
             setUf('');
+        }
+    }
+
+    const selectFormaDePagamento = (forma: 'CREDITO' | 'DEBITO' | 'DINHEIRO') => {
+        switch(forma){
+            case 'CREDITO':{
+                setCredito(true);
+                setDebito(false);
+                setDinheiro(false);
+                return;
+            }
+            case 'DEBITO':{
+                setCredito(false);
+                setDebito(true);
+                setDinheiro(false);
+                return;
+            }
+            case 'DINHEIRO':{
+                console.log('DINHEIRO');
+                setCredito(false);
+                setDebito(false);
+                setDinheiro(true);
+                return;
+            }
         }
     }
 
@@ -52,14 +79,14 @@ const Carrinho = () => {
                 <CarrinhoForm>
                     <DadosContainer>
                         <SubTitle>Complete seu pedido</SubTitle>
-                        <EnderecoBox>
-                            <DescriptionBoxContainer>
+                        <Box>
+                            <BoxDescriptionContainer>
                                 <MapPinLine size={22} weight="bold" color={theme.yellow} />
                                 <div>
                                     <BoxTitle>Endereço de Entrega</BoxTitle>
                                     <BoxDescription>Informe o endereço onde deseja receber seu pedido</BoxDescription>
                                 </div>
-                            </DescriptionBoxContainer>
+                            </BoxDescriptionContainer>
                             <EnderecoGrid>
                                 <Input value={cep} onChange={e => updateCep(e.target.value)} maxLength={8} startColumn={1} endColumn={7} placeholder="CEP"></Input>
                                 {cepInvalido && <ErrorMessage startColumn={1} endColumn={7} startRow={2}>Cep inválido!</ErrorMessage>}
@@ -70,7 +97,30 @@ const Carrinho = () => {
                                 <Input value={cidade} readOnly startColumn={7} endColumn={14} placeholder="Cidade" disabled></Input>
                                 <Input value={uf} readOnly startColumn={14} endColumn={16} placeholder="UF" disabled></Input>
                             </EnderecoGrid>
-                        </EnderecoBox>
+                        </Box>
+                        <Box>
+                            <BoxDescriptionContainer>
+                                <CurrencyDollar size={22} weight="light" color={theme.purple} />
+                                <div>
+                                    <BoxTitle>Pagamento</BoxTitle>
+                                    <BoxDescription>O pagamento é feito na entrega. Escolha a forma que deseja pagar</BoxDescription>
+                                </div>
+                            </BoxDescriptionContainer>
+                            <FormasDePagamentoList>
+                                <FormaDePagamento selected={credito} onClick={() => selectFormaDePagamento('CREDITO')}>
+                                    <CreditCard size={22} weight="light" color={theme.purple}/>
+                                    <p>CARTÃO DE CRÉDITO</p>
+                                </FormaDePagamento>
+                                <FormaDePagamento selected={debito} onClick={() => selectFormaDePagamento('DEBITO')}>
+                                    <Bank size={22} weight="light" color={theme.purple}/>
+                                    <p>CARTÃO DE DÉBITO</p>
+                                </FormaDePagamento>
+                                <FormaDePagamento selected={dinheiro} onClick={() => selectFormaDePagamento('DINHEIRO')}>
+                                    <Money size={22} weight="light" color={theme.purple}/>
+                                    <p>DINHEIRO</p>
+                                </FormaDePagamento>
+                            </FormasDePagamentoList>
+                        </Box>
                     </DadosContainer>
                     <SelectedCoffeesContainer>
                         <SubTitle>Cafés selecionados</SubTitle>

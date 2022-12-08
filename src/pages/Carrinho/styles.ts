@@ -5,7 +5,7 @@ export const CarrinhoForm = styled.form`
   grid-template-columns: 1.5fr 1fr;
   gap: 2rem;
 
-  @media(max-width: 1024px){
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -22,13 +22,13 @@ export const DadosContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
 `;
-export const EnderecoBox = styled.div`
+export const Box = styled.div`
   font-family: "Roboto", sans-serif;
   padding: 2.5rem;
   border-radius: 6px;
   background-color: ${(props) => props.theme["base-card"]};
 `;
-export const DescriptionBoxContainer = styled.div`
+export const BoxDescriptionContainer = styled.div`
   display: grid;
   grid-template-columns: 0.1fr 1.5fr;
 
@@ -103,8 +103,8 @@ export const Input = styled.input<InputProps>`
   grid-row-start: ${(props) => props.startRow};
   grid-row-end: ${(props) => props.endRow};
 
-  @media (max-width: 600px){
-    grid-column-start:1;
+  @media (max-width: 600px) {
+    grid-column-start: 1;
     grid-column-end: 16;
   }
 `;
@@ -117,19 +117,59 @@ interface ErrorMessageProps {
 }
 
 export const ErrorMessage = styled.span<ErrorMessageProps>`
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: red;
-  font-size: 0.75rem ;
+  font-size: 0.75rem;
 
   grid-column-start: ${(props) => props.startColumn};
   grid-column-end: ${(props) => props.endColumn};
   grid-row-start: ${(props) => props.startRow};
   grid-row-end: ${(props) => props.endRow};
 
-  
-  @media (max-width: 600px){
-    grid-column-start:1;
+  @media (max-width: 600px) {
+    grid-column-start: 1;
     grid-column-end: 16;
   }
+`;
+export const FormasDePagamentoList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: ${(props) => props.theme["base-text"]};
+  margin-top: 3rem;
 
-`
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+interface FormaDePagamentoProps {
+  selected: boolean;
+}
+export const FormaDePagamento = styled.div<FormaDePagamentoProps>`
+  display: grid;
+  grid-template-columns: 0.1fr 0.9fr;
+  align-items: center;
+  gap: 0.5rem;
+
+  background-color: ${(props) => props.theme["base-button"]};
+  padding: 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => props.theme["base-hover"]};
+  }
+
+  ${(props) => {
+    if (props.selected) {
+      return css`
+        background-color: ${(props) => props.theme["purple-light"]};
+        border: 1px solid ${(props) => props.theme.purple};
+      `;
+    }
+  }}
+`;
