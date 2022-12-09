@@ -13,7 +13,7 @@ export const adicionarCarrinhoAction = (coffee:Coffee, amount: number) => {
 
 export const removerCarrinhoAction = (coffee:Coffee) => {
     return {
-        type: CarrinhoActionsEnum.ADICIONAR,
+        type: CarrinhoActionsEnum.REMOVER,
         payload:{
             coffee
         }

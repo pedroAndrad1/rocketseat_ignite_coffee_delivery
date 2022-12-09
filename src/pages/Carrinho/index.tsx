@@ -1,13 +1,17 @@
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from "phosphor-react";
 import Container from "../../components/Container";
 import { theme } from "../../styles/theme";
-import { Box, BoxDescription, BoxDescriptionContainer, BoxTitle, CarrinhoForm, DadosContainer, EnderecoGrid, ErrorMessage, FormaDePagamento, FormasDePagamentoList, Input, SelectedCoffees, SelectedCoffeesContainer, SubTitle } from "./styles";
+import { Box, BoxDescription, BoxDescriptionContainer, BoxTitle, CarrinhoForm, DadosContainer, EnderecoGrid, ErrorMessage, FormaDePagamento, FormasDePagamentoList, Input, NoCoffee, SelectedCoffees, SelectedCoffeesContainer, SubTitle } from "./styles";
 import useCorreios from '../../custom-hooks/useCorreios';
 import { useState } from "react";
+import { useCarrinhoContext } from "../../contexts/CarrinhoContext";
+import SelectedCoffee from "../../components/SelectedCoffee";
+// import {CarrinhoItem} from '../../contexts/CarrinhoContext'
 
 const Carrinho = () => {
 
     const { findByCep } = useCorreios();
+    const {carrinho} = useCarrinhoContext();
     const [cep, setCep] = useState('');
     const [cepInvalido, setCepInvalido] = useState(false);
     const [rua, setRua] = useState('');
@@ -124,7 +128,16 @@ const Carrinho = () => {
                     </DadosContainer>
                     <SelectedCoffeesContainer>
                         <SubTitle>Cafés selecionados</SubTitle>
-                        <SelectedCoffees></SelectedCoffees>
+                        <SelectedCoffees>
+                            {
+                               carrinho.length > 0 ? 
+                                carrinho.map( (carrinhoItem, i) => {
+                                    return (<SelectedCoffee key={`selected_coffee_${i}`} coffee={carrinhoItem.coffee} amount={carrinhoItem.amount as number}></SelectedCoffee>)
+                                })
+                                :
+                                <NoCoffee>Por favor, selecione uma produto!</NoCoffee>
+                            }
+                        </SelectedCoffees>
                     </SelectedCoffeesContainer>
                 </CarrinhoForm>
             </main>

@@ -26,7 +26,6 @@ export function CarrinhoContextProvider({children}: CarrinhoContextProps){
 
     const adicionar = (coffee:Coffee, amount: number) =>{
         dispatchCarrinho(adicionarCarrinhoAction(coffee, amount));
-        console.log(carrinho);
     }
     const remover = (coffee:Coffee) =>{
         dispatchCarrinho(removerCarrinhoAction(coffee))

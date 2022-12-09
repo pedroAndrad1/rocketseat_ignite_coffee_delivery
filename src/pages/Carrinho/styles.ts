@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const CarrinhoForm = styled.form`
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  grid-template-columns: 1.25fr 1fr;
   gap: 2rem;
 
   @media (max-width: 1024px) {
@@ -58,7 +58,10 @@ export const SelectedCoffeesContainer = styled.div`
 `;
 
 export const SelectedCoffees = styled.div`
-  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2.5rem 1.5rem;
   border-radius: 6px 36px;
   background-color: ${(props) => props.theme["base-card"]};
 `;
@@ -173,3 +176,11 @@ export const FormaDePagamento = styled.div<FormaDePagamentoProps>`
     }
   }}
 `;
+
+export const NoCoffee = styled.p`
+   font-family: "Roboto", sans-serif;
+   font-size: 1rem;
+   color: ${(props) => props.theme["base-text"]}
+   /* text-align: center  */
+
+`

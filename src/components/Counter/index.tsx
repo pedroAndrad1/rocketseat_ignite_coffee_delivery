@@ -11,11 +11,11 @@ interface CounterProps{
 const Counter = ({counterValue, onIncrease, onDecrease}: CounterProps) => {
     return (
         <StyledCounter>
-            <button disabled={counterValue == 1 ? true : false} onClick={onDecrease}>
+            <button type="button" disabled={counterValue == 1 ? true : false} onClick={onDecrease}>
                 <Minus size={14} weight="fill" color={theme.purple} />
             </button>
             <span>{counterValue}</span>
-            <button onClick={onIncrease}>
+            <button type="button" onClick={onIncrease}>
                 <Plus size={14} weight="fill" color={theme.purple} />
             </button>
         </StyledCounter>

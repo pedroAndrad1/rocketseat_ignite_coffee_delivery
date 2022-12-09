@@ -11,7 +11,6 @@ export interface CarrinhoAction{
 }
 
 export const carrinhoReducer = (state:CarrinhoItem[], action: CarrinhoAction) => {
-
     const carrinhoItemIndex = 
                     state
                     .findIndex
@@ -30,9 +29,10 @@ export const carrinhoReducer = (state:CarrinhoItem[], action: CarrinhoAction) =>
         }
         case CarrinhoActionsEnum.REMOVER:{
            return produce(state, draft =>{
-                if(carrinhoItemIndex > 0){
-                    draft.splice(carrinhoItemIndex, 1);
+                if(carrinhoItemIndex != -1){
+                    draft.splice(carrinhoItemIndex, 1)
                 }
+               
             })
         }
         default: return state;
