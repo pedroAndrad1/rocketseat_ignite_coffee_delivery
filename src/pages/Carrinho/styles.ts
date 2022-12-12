@@ -178,9 +178,35 @@ export const FormaDePagamento = styled.div<FormaDePagamentoProps>`
 `;
 
 export const NoCoffee = styled.p`
-   font-family: "Roboto", sans-serif;
-   font-size: 1rem;
-   color: ${(props) => props.theme["base-text"]}
-   /* text-align: center  */
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  color: ${(props) => props.theme["base-text"]};
+`;
 
-`
+export const Valores = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-family: "Roboto", sans-serif;
+  line-height: 130%;
+  gap: 0.8rem;
+
+  span:nth-child(odd) {
+    text-align: left;
+  }
+
+  span:nth-child(even) {
+    text-align: right;
+  }
+
+  span:nth-child(-n + 4) {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: ${(props) => props.theme["base-text"]};
+  }
+
+  span:nth-child(n + 5) {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: ${(props) => props.theme["base-subtitle"]};
+  }
+`;

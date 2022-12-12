@@ -43,7 +43,7 @@ const CoffeeCard = ({src, types, title, description, value}: CoffeeCardProps) =>
             <CoffeeTitle>{title}</CoffeeTitle>
             <CoffeeDescription>{description}</CoffeeDescription>
             <CardActions>
-                <CoffeeValue>R$ <span>{value}</span></CoffeeValue>
+                <CoffeeValue>R$ <span>{value.replace('.',',')}</span></CoffeeValue>
                 <Counter counterValue={counter} onIncrease={increaseCounter} onDecrease={decreaseCounter}></Counter>
                 <BuyButton>
                     <ShoppingCart size={22} weight="fill" color={theme.white} onClick={() => addToCarrinho()}/>

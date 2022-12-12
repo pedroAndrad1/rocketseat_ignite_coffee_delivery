@@ -1,17 +1,18 @@
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from "phosphor-react";
 import Container from "../../components/Container";
 import { theme } from "../../styles/theme";
-import { Box, BoxDescription, BoxDescriptionContainer, BoxTitle, CarrinhoForm, DadosContainer, EnderecoGrid, ErrorMessage, FormaDePagamento, FormasDePagamentoList, Input, NoCoffee, SelectedCoffees, SelectedCoffeesContainer, SubTitle } from "./styles";
+import { Box, BoxDescription, BoxDescriptionContainer, BoxTitle, CarrinhoForm, DadosContainer, EnderecoGrid, ErrorMessage, FormaDePagamento, FormasDePagamentoList, Input, NoCoffee, SelectedCoffees, SelectedCoffeesContainer, SubTitle, Valores } from "./styles";
 import useCorreios from '../../custom-hooks/useCorreios';
 import { useState } from "react";
 import { useCarrinhoContext } from "../../contexts/CarrinhoContext";
 import SelectedCoffee from "../../components/SelectedCoffee";
+import Currency from 'react-currency-formatter';
 // import {CarrinhoItem} from '../../contexts/CarrinhoContext'
 
 const Carrinho = () => {
 
     const { findByCep } = useCorreios();
-    const {carrinho} = useCarrinhoContext();
+    const { carrinho } = useCarrinhoContext();
     const [cep, setCep] = useState('');
     const [cepInvalido, setCepInvalido] = useState(false);
     const [rua, setRua] = useState('');
@@ -54,20 +55,20 @@ const Carrinho = () => {
     }
 
     const selectFormaDePagamento = (forma: 'CREDITO' | 'DEBITO' | 'DINHEIRO') => {
-        switch(forma){
-            case 'CREDITO':{
+        switch (forma) {
+            case 'CREDITO': {
                 setCredito(true);
                 setDebito(false);
                 setDinheiro(false);
                 return;
             }
-            case 'DEBITO':{
+            case 'DEBITO': {
                 setCredito(false);
                 setDebito(true);
                 setDinheiro(false);
                 return;
             }
-            case 'DINHEIRO':{
+            case 'DINHEIRO': {
                 console.log('DINHEIRO');
                 setCredito(false);
                 setDebito(false);
@@ -75,6 +76,13 @@ const Carrinho = () => {
                 return;
             }
         }
+    }
+
+    const somaValores = () => {
+        return carrinho.reduce((accumulate, currentValue) => {
+            return accumulate + (Number.parseFloat(currentValue.coffee.value) * (currentValue.amount as number));
+        }, 0);
+
     }
 
     return (
@@ -112,15 +120,15 @@ const Carrinho = () => {
                             </BoxDescriptionContainer>
                             <FormasDePagamentoList>
                                 <FormaDePagamento selected={credito} onClick={() => selectFormaDePagamento('CREDITO')}>
-                                    <CreditCard size={22} weight="light" color={theme.purple}/>
+                                    <CreditCard size={22} weight="light" color={theme.purple} />
                                     <p>CARTÃO DE CRÉDITO</p>
                                 </FormaDePagamento>
                                 <FormaDePagamento selected={debito} onClick={() => selectFormaDePagamento('DEBITO')}>
-                                    <Bank size={22} weight="light" color={theme.purple}/>
+                                    <Bank size={22} weight="light" color={theme.purple} />
                                     <p>CARTÃO DE DÉBITO</p>
                                 </FormaDePagamento>
                                 <FormaDePagamento selected={dinheiro} onClick={() => selectFormaDePagamento('DINHEIRO')}>
-                                    <Money size={22} weight="light" color={theme.purple}/>
+                                    <Money size={22} weight="light" color={theme.purple} />
                                     <p>DINHEIRO</p>
                                 </FormaDePagamento>
                             </FormasDePagamentoList>
@@ -128,16 +136,26 @@ const Carrinho = () => {
                     </DadosContainer>
                     <SelectedCoffeesContainer>
                         <SubTitle>Cafés selecionados</SubTitle>
-                        <SelectedCoffees>
-                            {
-                               carrinho.length > 0 ? 
-                                carrinho.map( (carrinhoItem, i) => {
-                                    return (<SelectedCoffee key={`selected_coffee_${i}`} coffee={carrinhoItem.coffee} amount={carrinhoItem.amount as number}></SelectedCoffee>)
-                                })
+                        {
+                            carrinho.length > 0 ?
+                                <SelectedCoffees>
+                                    {
+                                        carrinho.map((carrinhoItem, i) => {
+                                            return (<SelectedCoffee key={`selected_coffee_${i}`} coffee={carrinhoItem.coffee} amount={carrinhoItem.amount as number}></SelectedCoffee>)
+                                        })
+                                    }
+                                    <Valores>
+                                        <span>Total de itens</span>
+                                        <span><Currency quantity={somaValores()} currency="BRL"></Currency></span>
+                                        <span>Entrega</span>
+                                        <span>R$3,50</span>
+                                        <span>Total</span>
+                                        <span><Currency quantity={somaValores() + 3.5} currency="BRL"></Currency></span>
+                                    </Valores>
+                                </SelectedCoffees>
                                 :
-                                <NoCoffee>Por favor, selecione uma produto!</NoCoffee>
-                            }
-                        </SelectedCoffees>
+                                <NoCoffee>Por favor, selecione um produto!</NoCoffee>
+                        }
                     </SelectedCoffeesContainer>
                 </CarrinhoForm>
             </main>

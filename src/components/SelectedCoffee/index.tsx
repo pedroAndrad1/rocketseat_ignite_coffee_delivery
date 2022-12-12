@@ -22,9 +22,6 @@ const SelectedCoffee = ({ coffee, amount }: SelectedCoffeeProps) => {
     }
 
     const decreaseItem = () => {
-        console.log(coffee);
-        console.log(amount);
-        
         adicionar(coffee, amount as number - 1);
     }
 
@@ -42,7 +39,7 @@ const SelectedCoffee = ({ coffee, amount }: SelectedCoffeeProps) => {
                     </RemoverButton>
                 </ActionsContainer>
             </InfosContainer>
-            <CarrinhoItemValue>R$ {coffee.value}</CarrinhoItemValue>
+            <CarrinhoItemValue>R${coffee.value.replace('.',',')}</CarrinhoItemValue>
         </CarrinhoItemContainer>
     )
 
