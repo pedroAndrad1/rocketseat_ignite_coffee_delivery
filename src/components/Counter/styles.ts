@@ -16,4 +16,8 @@ export const StyledCounter = styled.div`
         font-size: 1rem;
         line-height: 130%;
     }
+
+    svg:hover{
+        filter: brightness(0.5) ;
+    }
 `

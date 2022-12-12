@@ -7,10 +7,12 @@ import CompraConfirmada from './pages/CompraConfirmada';
 import Home from './pages/Home';
 import { GlobalStyle } from './styles/global';
 import { theme } from './styles/theme';
+import { ToastContainer } from 'react-toastify';
 function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ToastContainer />
       <CarrinhoContextProvider>
         <BrowserRouter>
           <Routes>

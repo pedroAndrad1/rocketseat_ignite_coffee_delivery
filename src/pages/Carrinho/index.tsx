@@ -1,17 +1,19 @@
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from "phosphor-react";
 import Container from "../../components/Container";
 import { theme } from "../../styles/theme";
-import { Box, BoxDescription, BoxDescriptionContainer, BoxTitle, CarrinhoForm, DadosContainer, EnderecoGrid, ErrorMessage, FormaDePagamento, FormasDePagamentoList, Input, NoCoffee, SelectedCoffees, SelectedCoffeesContainer, SubTitle, Valores } from "./styles";
+import { Box, BoxDescription, BoxDescriptionContainer, BoxTitle, CarrinhoForm, ConfirmarButton, DadosContainer, EnderecoGrid, ErrorMessage, FormaDePagamento, FormasDePagamentoList, Input, NoCoffee, SelectedCoffees, SelectedCoffeesContainer, SubTitle, Valores } from "./styles";
 import useCorreios from '../../custom-hooks/useCorreios';
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useCarrinhoContext } from "../../contexts/CarrinhoContext";
 import SelectedCoffee from "../../components/SelectedCoffee";
 import Currency from 'react-currency-formatter';
-// import {CarrinhoItem} from '../../contexts/CarrinhoContext'
+import useToast from "../../custom-hooks/useToast";
+
 
 const Carrinho = () => {
 
     const { findByCep } = useCorreios();
+    const { error } = useToast();
     const { carrinho } = useCarrinhoContext();
     const [cep, setCep] = useState('');
     const [cepInvalido, setCepInvalido] = useState(false);
@@ -85,10 +87,19 @@ const Carrinho = () => {
 
     }
 
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        if (!cepInvalido && numero.length) {
+        }
+        else {
+            error('Campos inválidos ou incompletos!')
+        }
+    }
+
     return (
         <Container>
             <main>
-                <CarrinhoForm>
+                <CarrinhoForm onSubmit={e => handleSubmit(e)}>
                     <DadosContainer>
                         <SubTitle>Complete seu pedido</SubTitle>
                         <Box>
@@ -152,6 +163,7 @@ const Carrinho = () => {
                                         <span>Total</span>
                                         <span><Currency quantity={somaValores() + 3.5} currency="BRL"></Currency></span>
                                     </Valores>
+                                    <ConfirmarButton type="submit">Confirmar pedido</ConfirmarButton>
                                 </SelectedCoffees>
                                 :
                                 <NoCoffee>Por favor, selecione um produto!</NoCoffee>

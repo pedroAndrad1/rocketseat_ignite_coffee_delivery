@@ -12,7 +12,7 @@ const Counter = ({counterValue, onIncrease, onDecrease}: CounterProps) => {
     return (
         <StyledCounter>
             <button type="button" disabled={counterValue == 1 ? true : false} onClick={onDecrease}>
-                <Minus size={14} weight="fill" color={theme.purple} />
+                <Minus size={14} weight="fill" color={theme.purple}/>
             </button>
             <span>{counterValue}</span>
             <button type="button" onClick={onIncrease}>

@@ -45,8 +45,8 @@ const CoffeeCard = ({src, types, title, description, value}: CoffeeCardProps) =>
             <CardActions>
                 <CoffeeValue>R$ <span>{value.replace('.',',')}</span></CoffeeValue>
                 <Counter counterValue={counter} onIncrease={increaseCounter} onDecrease={decreaseCounter}></Counter>
-                <BuyButton>
-                    <ShoppingCart size={22} weight="fill" color={theme.white} onClick={() => addToCarrinho()}/>
+                <BuyButton onClick={() => addToCarrinho()}>
+                    <ShoppingCart size={22} weight="fill" color={theme.white}/>
                 </BuyButton>
             </CardActions>
         </Card>
