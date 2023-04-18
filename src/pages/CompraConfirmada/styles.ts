@@ -7,8 +7,13 @@ export const ConfirmacaoContainer = styled.main`
   padding: 5rem;
   padding-top: 1rem ;
 
-  @media (max-width: 600px) {
+  img{
+    width: 100%;
+  }
+
+  @media (max-width: 1000px) {
     grid-template-columns: 1fr;
+    padding: 1rem;
   }
 `;
 export const CompraContent = styled.div`
