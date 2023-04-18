@@ -8,9 +8,10 @@ import { useEffect, useState } from 'react';
 const CompraConfirmada = () => {
     // O Return do useEffect e chamado no OnMount. Entao e preciso contar os renders
     const [renderCounter, setRenderCounter] = useState(0);
-    const {endereco, formaPagamento, resetCompra, } = useCarrinhoContext();
+    const {endereco, formaPagamento, resetCompra, limparCarrinho } = useCarrinhoContext();
 
     useEffect(() =>{
+        limparCarrinho();
         return () => renderCounter == 0 ? setRenderCounter(1) : resetCompra();
     },[renderCounter])
 

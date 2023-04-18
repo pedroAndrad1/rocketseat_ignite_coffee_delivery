@@ -25,7 +25,8 @@ interface CarrinhoContextData {
     adicionarFormaPagamento:
         (formaPagamento: 'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro') => void,
     confirmarPagamento: () => void,
-    resetCompra: () => void
+    resetCompra: () => void,
+    limparCarrinho: () => void
 }
 
 interface CarrinhoContextProps {
@@ -56,11 +57,12 @@ export function CarrinhoContextProvider({ children }: CarrinhoContextProps) {
         setFormaPagamento(formaPagamento);
     
     const confirmarPagamento = () => setPagamentoConfirmado(true);
-    
-    const resetCompra = () =>{
+
+    const limparCarrinho = () =>
         dispatchCarrinho(limparCarrinhoAction());
+
+    const resetCompra = () =>
         setPagamentoConfirmado(false);
-    }
     
     return (
         <CarrinhoContext.Provider value={{
@@ -73,7 +75,8 @@ export function CarrinhoContextProvider({ children }: CarrinhoContextProps) {
             adicionarEndereco,
             adicionarFormaPagamento,
             resetCompra,
-            confirmarPagamento
+            confirmarPagamento,
+            limparCarrinho
         }}>
             {children}
         </CarrinhoContext.Provider>
