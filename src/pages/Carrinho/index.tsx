@@ -8,6 +8,7 @@ import { useCarrinhoContext } from "../../contexts/CarrinhoContext";
 import SelectedCoffee from "../../components/SelectedCoffee";
 import Currency from 'react-currency-formatter';
 import useToast from "../../custom-hooks/useToast";
+import { useNavigate } from "react-router-dom";
 
 
 const Carrinho = () => {
@@ -15,6 +16,7 @@ const Carrinho = () => {
     const { findByCep } = useCorreios();
     const { error } = useToast();
     const { carrinho } = useCarrinhoContext();
+    const navigate = useNavigate()
     const [cep, setCep] = useState('');
     const [cepInvalido, setCepInvalido] = useState(false);
     const [rua, setRua] = useState('');
@@ -90,6 +92,7 @@ const Carrinho = () => {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (!cepInvalido && numero.length) {
+            navigate(`/compra-confirmada/${Math.floor(Math.random() * 100)}`)
         }
         else {
             error('Campos inválidos ou incompletos!')
