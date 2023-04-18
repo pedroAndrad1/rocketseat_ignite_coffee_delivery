@@ -91,18 +91,23 @@ const Carrinho = () => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        if (!cepInvalido && numero.length) {
-            adicionarEndereco({
-                rua: rua,
-                numero: numero,
-                complemento: complemento ? complemento : ''
-            });
-            addFormaPagamento();
-            confirmarPagamento();
-            navigate(`/compra-confirmada/${Math.floor(Math.random() * 100)}`)
+        if(uf == "RJ"){
+            if (!cepInvalido && numero.length) {
+                adicionarEndereco({
+                    rua: rua,
+                    numero: numero,
+                    complemento: complemento ? complemento : ''
+                });
+                addFormaPagamento();
+                confirmarPagamento();
+                navigate(`/compra-confirmada/${Math.floor(Math.random() * 100)}`)
+            }
+            else {
+                error('Campos inválidos ou incompletos!')
+            }
         }
-        else {
-            error('Campos inválidos ou incompletos!')
+        else{
+            error('Atualmente só fazemos entregas no estado do Rio de Janeiro. Em breve entregaremos no seu estado!')
         }
     }
 
