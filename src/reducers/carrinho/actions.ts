@@ -19,3 +19,9 @@ export const removerCarrinhoAction = (coffee:Coffee) => {
         }
     }
 }
+
+export const limparCarrinhoAction = () =>{
+    return {
+        type: CarrinhoActionsEnum.LIMPAR,
+    }
+}

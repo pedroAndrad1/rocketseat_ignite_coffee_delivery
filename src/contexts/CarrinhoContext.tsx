@@ -1,50 +1,85 @@
-import { createContext, ReactNode, useContext, useReducer } from "react";
+import { createContext, ReactNode, useContext, useReducer, useState } from "react";
 import { Coffee } from "../data/coffee-data";
-import { adicionarCarrinhoAction, removerCarrinhoAction } from "../reducers/carrinho/actions";
+import { adicionarCarrinhoAction, removerCarrinhoAction, limparCarrinhoAction} from "../reducers/carrinho/actions";
 import { carrinhoReducer } from "../reducers/carrinho/reducer";
 
-export interface CarrinhoItem{
+export interface CarrinhoItem {
     coffee: Coffee,
     amount?: number
 }
 
-interface CarrinhoContextData{
-    carrinho: CarrinhoItem[],
-    adicionar: (coffee:Coffee, amount: number) => void,
-    remover: (coffee:Coffee) => void,
+export interface Endereco {
+    rua: string;
+    numero: string;
+    complemento?: string;
 }
 
-interface CarrinhoContextProps{
+interface CarrinhoContextData {
+    carrinho: CarrinhoItem[],
+    endereco: Endereco,
+    formaPagamento: 'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro',
+    pagamentoConfirmado: boolean,
+    adicionar: (coffee: Coffee, amount: number) => void,
+    remover: (coffee: Coffee) => void,
+    adicionarEndereco: (endereco: Endereco) => void,
+    adicionarFormaPagamento:
+        (formaPagamento: 'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro') => void,
+    confirmarPagamento: () => void,
+    resetCompra: () => void
+}
+
+interface CarrinhoContextProps {
     children: ReactNode
 }
 
 
 export const CarrinhoContext = createContext({} as CarrinhoContextData);
 
-export function CarrinhoContextProvider({children}: CarrinhoContextProps){
-    const [carrinho, dispatchCarrinho] = useReducer( carrinhoReducer, []);
+export function CarrinhoContextProvider({ children }: CarrinhoContextProps) {
+    const [carrinho, dispatchCarrinho] = useReducer(carrinhoReducer, []);
+    const [endereco, setEndereco] = useState<Endereco>({numero:'',rua:''});
+    const [formaPagamento, setFormaPagamento] =
+        useState<'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro'>('Cartão de crédito');
+    const [pagamentoConfirmado, setPagamentoConfirmado] = useState(false);
 
-    const adicionar = (coffee:Coffee, amount: number) =>{
+    const adicionar = (coffee: Coffee, amount: number) =>
         dispatchCarrinho(adicionarCarrinhoAction(coffee, amount));
-        console.log(carrinho);
-        
-        
-    }
-    const remover = (coffee:Coffee) =>{
-        dispatchCarrinho(removerCarrinhoAction(coffee))
-    }
 
+    const remover = (coffee: Coffee) =>
+        dispatchCarrinho(removerCarrinhoAction(coffee));
+
+    const adicionarEndereco = (endereco: Endereco) =>
+        setEndereco(endereco)
+
+    const adicionarFormaPagamento = 
+        (formaPagamento: 'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro') =>
+        setFormaPagamento(formaPagamento);
+    
+    const confirmarPagamento = () => setPagamentoConfirmado(true);
+    
+    const resetCompra = () =>{
+        dispatchCarrinho(limparCarrinhoAction());
+        setPagamentoConfirmado(false);
+    }
+    
     return (
         <CarrinhoContext.Provider value={{
             carrinho,
+            endereco,
+            formaPagamento,
+            pagamentoConfirmado,
             adicionar,
-            remover
+            remover,
+            adicionarEndereco,
+            adicionarFormaPagamento,
+            resetCompra,
+            confirmarPagamento
         }}>
             {children}
         </CarrinhoContext.Provider>
     )
 }
 
-export const useCarrinhoContext = () =>{
+export const useCarrinhoContext = () => {
     return useContext(CarrinhoContext);
 }
