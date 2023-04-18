@@ -4,7 +4,7 @@ import { theme } from "../../styles/theme";
 import { Box, BoxDescription, BoxDescriptionContainer, BoxTitle, CarrinhoForm, ConfirmarButton, DadosContainer, EnderecoGrid, ErrorMessage, FormaDePagamento, FormasDePagamentoList, Input, NoCoffee, SelectedCoffees, SelectedCoffeesContainer, SubTitle, Valores } from "./styles";
 import useCorreios from '../../custom-hooks/useCorreios';
 import { FormEvent, useState } from "react";
-import { useCarrinhoContext } from "../../contexts/CarrinhoContext";
+import { Endereco, useCarrinhoContext } from "../../contexts/CarrinhoContext";
 import SelectedCoffee from "../../components/SelectedCoffee";
 import Currency from 'react-currency-formatter';
 import useToast from "../../custom-hooks/useToast";
@@ -15,7 +15,7 @@ const Carrinho = () => {
 
     const { findByCep } = useCorreios();
     const { error } = useToast();
-    const { carrinho } = useCarrinhoContext();
+    const { carrinho,adicionarEndereco, adicionarFormaPagamento } = useCarrinhoContext();
     const navigate = useNavigate()
     const [cep, setCep] = useState('');
     const [cepInvalido, setCepInvalido] = useState(false);
@@ -73,7 +73,6 @@ const Carrinho = () => {
                 return;
             }
             case 'DINHEIRO': {
-                console.log('DINHEIRO');
                 setCredito(false);
                 setDebito(false);
                 setDinheiro(true);
@@ -84,7 +83,8 @@ const Carrinho = () => {
 
     const somaValores = () => {
         return carrinho.reduce((accumulate, currentValue) => {
-            return accumulate + (Number.parseFloat(currentValue.coffee.value) * (currentValue.amount as number));
+            return accumulate + 
+            (Number.parseFloat(currentValue.coffee.value) * (currentValue.amount as number));
         }, 0);
 
     }
@@ -92,10 +92,28 @@ const Carrinho = () => {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (!cepInvalido && numero.length) {
+            adicionarEndereco({
+                rua: rua,
+                numero: numero,
+                complemento: complemento ? complemento : ''
+            });
+            addFormaPagamento();
             navigate(`/compra-confirmada/${Math.floor(Math.random() * 100)}`)
         }
         else {
             error('Campos inválidos ou incompletos!')
+        }
+    }
+
+    const addFormaPagamento = () =>{
+        if(credito){
+            adicionarFormaPagamento('Cartão de crédito');
+        }
+        else if(debito){
+            adicionarFormaPagamento('Cartão de débito');
+        }
+        else{
+            adicionarFormaPagamento('Dinheiro');
         }
     }
 
