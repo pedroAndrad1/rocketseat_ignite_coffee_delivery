@@ -4,7 +4,7 @@ import { theme } from "../../styles/theme";
 import { Box, BoxDescription, BoxDescriptionContainer, BoxTitle, CarrinhoForm, ConfirmarButton, DadosContainer, EnderecoGrid, ErrorMessage, FormaDePagamento, FormasDePagamentoList, Input, NoCoffee, SelectedCoffees, SelectedCoffeesContainer, SubTitle, Valores } from "./styles";
 import useCorreios from '../../custom-hooks/useCorreios';
 import { FormEvent, useState } from "react";
-import { Endereco, useCarrinhoContext } from "../../contexts/CarrinhoContext";
+import { useCarrinhoContext } from "../../contexts/CarrinhoContext";
 import SelectedCoffee from "../../components/SelectedCoffee";
 import Currency from 'react-currency-formatter';
 import useToast from "../../custom-hooks/useToast";
@@ -15,7 +15,7 @@ const Carrinho = () => {
 
     const { findByCep } = useCorreios();
     const { error } = useToast();
-    const { carrinho,adicionarEndereco, adicionarFormaPagamento } = useCarrinhoContext();
+    const { carrinho, adicionarEndereco, adicionarFormaPagamento, confirmarPagamento } = useCarrinhoContext();
     const navigate = useNavigate()
     const [cep, setCep] = useState('');
     const [cepInvalido, setCepInvalido] = useState(false);
@@ -98,6 +98,7 @@ const Carrinho = () => {
                 complemento: complemento ? complemento : ''
             });
             addFormaPagamento();
+            confirmarPagamento();
             navigate(`/compra-confirmada/${Math.floor(Math.random() * 100)}`)
         }
         else {

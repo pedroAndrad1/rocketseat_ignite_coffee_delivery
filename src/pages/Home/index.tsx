@@ -5,9 +5,18 @@ import { Coffee, Package, ShoppingCart, Timer } from "phosphor-react";
 import { theme } from '../../styles/theme';
 import CoffeeCard from "../../components/CoffeeCard";
 import { COFFEE_DATA } from '../../data/coffee-data';
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 const Home = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    
+    useEffect(() => {
+        if(location.pathname != '/') navigate('/');
+    }, [navigate, location]);
+
     return (
         <HomeWrapper>
             <IntroContainer>

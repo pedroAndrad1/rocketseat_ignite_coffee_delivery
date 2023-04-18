@@ -3,15 +3,16 @@ import moto from '../../assets/homem-na-motocicleta.svg';
 import { CurrencyDollar, MapPin, Timer } from 'phosphor-react';
 import { theme } from '../../styles/theme';
 import { useCarrinhoContext } from '../../contexts/CarrinhoContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const CompraConfirmada = () => {
-
-    const {endereco, formaPagamento, resetCompra} = useCarrinhoContext();
+    // O Return do useEffect e chamado no OnMount. Entao e preciso contar os renders
+    const [renderCounter, setRenderCounter] = useState(0);
+    const {endereco, formaPagamento, resetCompra, } = useCarrinhoContext();
 
     useEffect(() =>{
-        resetCompra();
-    },[])
+        return () => renderCounter == 0 ? setRenderCounter(1) : resetCompra();
+    },[renderCounter])
 
     return (
         <ConfirmacaoContainer>
