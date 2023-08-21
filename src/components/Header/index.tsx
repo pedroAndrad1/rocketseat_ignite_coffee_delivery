@@ -3,13 +3,21 @@ import { CarrinhoAmount, CarrinhoContainer, HeaderContainer, Location } from "./
 import logo from '../../assets/logo.svg';
 import { MapPin, ShoppingCart } from "phosphor-react";
 import { useCarrinhoContext } from "../../contexts/CarrinhoContext";
+import { useKeycloak } from '@react-keycloak/web'
+
 
 const Header = () => {
 
     const {carrinho} = useCarrinhoContext()
+    const { keycloak, initialized } = useKeycloak()
+
+    const login = () =>{
+        keycloak.login()
+    }
 
     return (
         <HeaderContainer>
+            <button onClick={login}>TESTE</button>
             <NavLink to="/">
                 <img src={logo} alt="Café Coffee Delivery"></img>
             </NavLink>
