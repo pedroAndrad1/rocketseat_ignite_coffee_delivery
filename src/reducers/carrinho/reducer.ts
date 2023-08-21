@@ -1,5 +1,6 @@
 import { CarrinhoItem } from "../../contexts/CarrinhoContext";
 import produce from "immer";
+import useToast from "../../custom-hooks/useToast";
 
 export enum CarrinhoActionsEnum{
     ADICIONAR, REMOVER, LIMPAR
@@ -11,6 +12,7 @@ export interface CarrinhoAction{
 }
 
 export const carrinhoReducer = (state:CarrinhoItem[], action: CarrinhoAction) => {
+    const {success} = useToast()
     const carrinhoItemIndex = 
                     state
                     .findIndex
@@ -21,10 +23,14 @@ export const carrinhoReducer = (state:CarrinhoItem[], action: CarrinhoAction) =>
            return produce(state, draft => {
                 if(action.payload){
                     if(carrinhoItemIndex >= 0){
+                        if(draft[carrinhoItemIndex].amount !=  action.payload.amount){
+                            success('Carrinho atualizado!')
+                        }
                         draft[carrinhoItemIndex] = action.payload;
                     }
                     else{ 
                         draft.push(action.payload);
+                        success('Adicionado ao carrinho!')
                     }
                 }
             })

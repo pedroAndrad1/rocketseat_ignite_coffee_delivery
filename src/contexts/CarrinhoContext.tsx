@@ -34,7 +34,7 @@ interface CarrinhoContextProps {
 }
 
 
-export const CarrinhoContext = createContext({} as CarrinhoContextData);
+const CarrinhoContext = createContext({} as CarrinhoContextData);
 
 export function CarrinhoContextProvider({ children }: CarrinhoContextProps) {
     const [carrinho, dispatchCarrinho] = useReducer(carrinhoReducer, []);
