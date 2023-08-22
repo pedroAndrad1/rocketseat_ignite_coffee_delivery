@@ -1,27 +1,27 @@
-import { Coffee } from "../../data/coffee-data";
-import { CarrinhoActionsEnum } from "./reducer";
+import { Coffee } from '../../data/coffee-data'
+import { CarrinhoActionsEnum } from './reducer'
 
-export const adicionarCarrinhoAction = (coffee:Coffee, amount: number) => {
-    return {
-        type: CarrinhoActionsEnum.ADICIONAR,
-        payload:{
-            coffee,
-            amount
-        }
-    }
+export const adicionarCarrinhoAction = (coffee: Coffee, amount: number) => {
+  return {
+    type: CarrinhoActionsEnum.ADICIONAR,
+    payload: {
+      coffee,
+      amount,
+    },
+  }
 }
 
-export const removerCarrinhoAction = (coffee:Coffee) => {
-    return {
-        type: CarrinhoActionsEnum.REMOVER,
-        payload:{
-            coffee
-        }
-    }
+export const removerCarrinhoAction = (coffee: Coffee) => {
+  return {
+    type: CarrinhoActionsEnum.REMOVER,
+    payload: {
+      coffee,
+    },
+  }
 }
 
-export const limparCarrinhoAction = () =>{
-    return {
-        type: CarrinhoActionsEnum.LIMPAR,
-    }
+export const limparCarrinhoAction = () => {
+  return {
+    type: CarrinhoActionsEnum.LIMPAR,
+  }
 }

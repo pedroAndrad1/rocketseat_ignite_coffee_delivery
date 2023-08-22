@@ -3,9 +3,9 @@ import Keycloak from 'keycloak-js'
 // Setup Keycloak instance as needed
 // Pass initialization options as required or leave blank to load from 'keycloak.json'
 const keycloak = new Keycloak({
-    clientId:'coffee-delivery',
-    realm:'CoffeeDelivery',
-    url:'http://localhost:8180'
+  clientId: 'coffee-delivery',
+  realm: 'CoffeeDelivery',
+  url: 'http://localhost:8180',
 })
 
 export default keycloak
