@@ -1,4 +1,4 @@
-import { CarrinhoItem } from '../../contexts/CarrinhoContext'
+import { CarrinhoItem } from '../../contexts/CarrinhoContext/CarrinhoContext'
 import produce from 'immer'
 import useToast from '../../custom-hooks/useToast'
 
@@ -13,7 +13,7 @@ export interface CarrinhoAction {
   payload?: CarrinhoItem
 }
 
-export const carrinhoReducer = (
+export const CarrinhoReducer = (
   state: CarrinhoItem[],
   action: CarrinhoAction,
 ) => {
@@ -28,7 +28,7 @@ export const carrinhoReducer = (
       return produce(state, (draft) => {
         if (action.payload) {
           if (carrinhoItemIndex >= 0) {
-            if (draft[carrinhoItemIndex].amount != action.payload.amount) {
+            if (draft[carrinhoItemIndex].amount !== action.payload.amount) {
               success('Carrinho atualizado!')
             }
             draft[carrinhoItemIndex] = action.payload
@@ -41,12 +41,13 @@ export const carrinhoReducer = (
     }
     case CarrinhoActionsEnum.REMOVER: {
       return produce(state, (draft) => {
-        if (carrinhoItemIndex != -1) {
+        if (carrinhoItemIndex !== -1) {
           draft.splice(carrinhoItemIndex, 1)
         }
       })
     }
     case CarrinhoActionsEnum.LIMPAR: {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       return produce(state, (draft) => (draft = []))
     }
     default:

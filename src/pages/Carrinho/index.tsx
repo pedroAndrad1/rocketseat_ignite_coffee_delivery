@@ -28,11 +28,11 @@ import {
 } from './styles'
 import useCorreios from '../../custom-hooks/useCorreios'
 import { FormEvent, useState } from 'react'
-import { useCarrinhoContext } from '../../contexts/CarrinhoContext'
 import SelectedCoffee from '../../components/SelectedCoffee'
 import Currency from 'react-currency-formatter'
 import useToast from '../../custom-hooks/useToast'
 import { useNavigate } from 'react-router-dom'
+import { useCarrinhoContext } from '../../contexts/CarrinhoContext'
 
 const Carrinho = () => {
   const { findByCep } = useCorreios()
@@ -58,7 +58,7 @@ const Carrinho = () => {
 
   const updateCep = (cepValue: string) => {
     setCep(cepValue)
-    if (cepValue.length == 8) {
+    if (cepValue.length === 8) {
       findByCep(cepValue).then((res) => {
         if (!res || res.erro) {
           setCepInvalido(true)
@@ -74,7 +74,7 @@ const Carrinho = () => {
       setCepInvalido(false)
     }
 
-    if (cepValue.length == 0) {
+    if (cepValue.length === 0) {
       setRua('')
       setBairro('')
       setCidade('')
@@ -116,7 +116,7 @@ const Carrinho = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (uf == 'RJ') {
+    if (uf === 'RJ') {
       if (!cepInvalido && numero.length) {
         adicionarEndereco({
           rua,

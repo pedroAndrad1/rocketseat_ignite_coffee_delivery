@@ -11,7 +11,7 @@ interface CounterProps {
 const Counter = ({ counterValue, onIncrease, onDecrease }: CounterProps) => {
   return (
     <StyledCounter>
-      <button type="button" disabled={counterValue == 1} onClick={onDecrease}>
+      <button type="button" disabled={counterValue === 1} onClick={onDecrease}>
         <Minus size={14} weight="fill" color={theme.purple} />
       </button>
       <span>{counterValue}</span>

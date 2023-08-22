@@ -10,6 +10,7 @@ const ContainerBox = styled.div`
   }
 `
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Container = ({ children }: any) => {
   return <ContainerBox>{children}</ContainerBox>
 }

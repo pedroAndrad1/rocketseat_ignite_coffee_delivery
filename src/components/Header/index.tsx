@@ -9,7 +9,7 @@ import logo from '../../assets/logo.svg'
 import { User, ShoppingCart } from 'phosphor-react'
 import { useCarrinhoContext } from '../../contexts/CarrinhoContext'
 import { useKeycloak } from '@react-keycloak/web'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 
 interface Usuario {
@@ -30,7 +30,7 @@ const Header = () => {
   const loginLogout = async () =>
     keycloak.authenticated ? keycloak.logout() : keycloak.login()
 
-  const loadUsuarioInfo = () => {
+  const loadUsuarioInfo = useCallback(() => {
     keycloak
       .loadUserProfile()
       .then(({ email, firstName, lastName, username }) => {
@@ -42,7 +42,7 @@ const Header = () => {
         })
         setLoginTooltipContent('Clique aqui para fazer logout')
       })
-  }
+  }, [keycloak])
 
   useEffect(() => {
     if (initialized && keycloak.authenticated && !usuario) {

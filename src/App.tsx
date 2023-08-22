@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import Layout from './components/Layout'
-import { CarrinhoContextProvider } from './contexts/CarrinhoContext'
+import { CarrinhoContextProvider } from './contexts/CarrinhoContext/CarrinhoContext'
 import Carrinho from './pages/Carrinho'
 import Home from './pages/Home'
 import { GlobalStyle } from './styles/global'

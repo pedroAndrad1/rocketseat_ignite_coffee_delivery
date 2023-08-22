@@ -1,17 +1,11 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useReducer,
-  useState,
-} from 'react'
-import { Coffee } from '../data/coffee-data'
+import { createContext, ReactNode, useReducer, useState } from 'react'
+import { Coffee } from '../../data/coffee-data'
 import {
   adicionarCarrinhoAction,
   removerCarrinhoAction,
   limparCarrinhoAction,
-} from '../reducers/carrinho/actions'
-import { carrinhoReducer } from '../reducers/carrinho/reducer'
+} from '../../reducers/carrinho/actions'
+import { CarrinhoReducer } from '../../reducers/carrinho/reducer'
 
 export interface CarrinhoItem {
   coffee: Coffee
@@ -44,10 +38,10 @@ interface CarrinhoContextProps {
   children: ReactNode
 }
 
-const CarrinhoContext = createContext({} as CarrinhoContextData)
+export const CarrinhoContext = createContext({} as CarrinhoContextData)
 
 export function CarrinhoContextProvider({ children }: CarrinhoContextProps) {
-  const [carrinho, dispatchCarrinho] = useReducer(carrinhoReducer, [])
+  const [carrinho, dispatchCarrinho] = useReducer(CarrinhoReducer, [])
   const [endereco, setEndereco] = useState<Endereco>({ numero: '', rua: '' })
   const [formaPagamento, setFormaPagamento] = useState<
     'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro'
@@ -91,8 +85,4 @@ export function CarrinhoContextProvider({ children }: CarrinhoContextProps) {
       {children}
     </CarrinhoContext.Provider>
   )
-}
-
-export const useCarrinhoContext = () => {
-  return useContext(CarrinhoContext)
 }

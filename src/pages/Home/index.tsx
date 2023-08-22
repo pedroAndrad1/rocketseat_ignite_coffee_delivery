@@ -23,7 +23,7 @@ const Home = () => {
   const location = useLocation()
 
   useEffect(() => {
-    if (location.pathname != '/') navigate('/')
+    if (location.pathname !== '/') navigate('/')
   }, [navigate, location])
 
   return (
