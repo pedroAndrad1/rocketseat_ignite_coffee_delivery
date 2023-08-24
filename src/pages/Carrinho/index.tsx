@@ -21,6 +21,7 @@ import {
   FormasDePagamentoList,
   Input,
   NoCoffee,
+  NotLoggedMessage,
   SelectedCoffees,
   SelectedCoffeesContainer,
   SubTitle,
@@ -33,8 +34,10 @@ import Currency from 'react-currency-formatter'
 import useToast from '../../custom-hooks/useToast'
 import { useNavigate } from 'react-router-dom'
 import { useCarrinhoContext } from '../../contexts/CarrinhoContext'
+import { useKeycloak } from '@react-keycloak/web'
 
 const Carrinho = () => {
+  const { keycloak } = useKeycloak()
   const { findByCep } = useCorreios()
   const { error } = useToast()
   const {
@@ -116,6 +119,17 @@ const Carrinho = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
+
+    if (!keycloak.authenticated) {
+      error('Por favor, faça login antes de continuar.')
+      return
+    }
+
+    if (!cep || !numero) {
+      error('Campos inválidos ou incompletos!')
+      return
+    }
+
     if (uf === 'RJ') {
       if (!cepInvalido && numero.length) {
         adicionarEndereco({
@@ -150,119 +164,129 @@ const Carrinho = () => {
     <Container>
       <main>
         <CarrinhoForm onSubmit={(e) => handleSubmit(e)}>
-          <DadosContainer>
-            <SubTitle>Complete seu pedido</SubTitle>
-            <Box>
-              <BoxDescriptionContainer>
-                <MapPinLine size={22} weight="bold" color={theme.yellow} />
-                <div>
-                  <BoxTitle>Endereço de Entrega</BoxTitle>
-                  <BoxDescription>
-                    Informe o endereço onde deseja receber seu pedido
-                  </BoxDescription>
-                </div>
-              </BoxDescriptionContainer>
-              <EnderecoGrid>
-                <Input
-                  value={cep}
-                  onChange={(e) => updateCep(e.target.value)}
-                  maxLength={8}
-                  startColumn={1}
-                  endColumn={7}
-                  placeholder="CEP"
-                ></Input>
-                {cepInvalido && (
-                  <ErrorMessage startColumn={1} endColumn={7} startRow={2}>
-                    Cep inválido!
-                  </ErrorMessage>
-                )}
-                <Input
-                  value={rua}
-                  readOnly
-                  startColumn={1}
-                  endColumn={16}
-                  placeholder="Rua"
-                  startRow={3}
-                  disabled
-                ></Input>
-                <Input
-                  value={numero}
-                  onChange={(e) => setNumero(e.target.value)}
-                  type="number"
-                  min={0}
-                  startColumn={1}
-                  endColumn={7}
-                  placeholder="Número"
-                ></Input>
-                <Input
-                  value={complemento}
-                  onChange={(e) => setComplemento(e.target.value)}
-                  startColumn={7}
-                  endColumn={16}
-                  placeholder="Complemento (Opcional)"
-                ></Input>
-                <Input
-                  value={bairro}
-                  readOnly
-                  startColumn={1}
-                  endColumn={7}
-                  placeholder="Bairro"
-                  disabled
-                ></Input>
-                <Input
-                  value={cidade}
-                  readOnly
-                  startColumn={7}
-                  endColumn={14}
-                  placeholder="Cidade"
-                  disabled
-                ></Input>
-                <Input
-                  value={uf}
-                  readOnly
-                  startColumn={14}
-                  endColumn={16}
-                  placeholder="UF"
-                  disabled
-                ></Input>
-              </EnderecoGrid>
-            </Box>
-            <Box>
-              <BoxDescriptionContainer>
-                <CurrencyDollar size={22} weight="light" color={theme.purple} />
-                <div>
-                  <BoxTitle>Pagamento</BoxTitle>
-                  <BoxDescription>
-                    O pagamento é feito na entrega. Escolha a forma que deseja
-                    pagar
-                  </BoxDescription>
-                </div>
-              </BoxDescriptionContainer>
-              <FormasDePagamentoList>
-                <FormaDePagamento
-                  selected={credito}
-                  onClick={() => selectFormaDePagamento('CREDITO')}
-                >
-                  <CreditCard size={22} weight="light" color={theme.purple} />
-                  <p>CARTÃO DE CRÉDITO</p>
-                </FormaDePagamento>
-                <FormaDePagamento
-                  selected={debito}
-                  onClick={() => selectFormaDePagamento('DEBITO')}
-                >
-                  <Bank size={22} weight="light" color={theme.purple} />
-                  <p>CARTÃO DE DÉBITO</p>
-                </FormaDePagamento>
-                <FormaDePagamento
-                  selected={dinheiro}
-                  onClick={() => selectFormaDePagamento('DINHEIRO')}
-                >
-                  <Money size={22} weight="light" color={theme.purple} />
-                  <p>DINHEIRO</p>
-                </FormaDePagamento>
-              </FormasDePagamentoList>
-            </Box>
-          </DadosContainer>
+          {!keycloak.authenticated ? (
+            <NotLoggedMessage>
+              Por favor, faça login para continuar!
+            </NotLoggedMessage>
+          ) : (
+            <DadosContainer>
+              <SubTitle>Complete seu pedido</SubTitle>
+              <Box>
+                <BoxDescriptionContainer>
+                  <MapPinLine size={22} weight="bold" color={theme.yellow} />
+                  <div>
+                    <BoxTitle>Endereço de Entrega</BoxTitle>
+                    <BoxDescription>
+                      Informe o endereço onde deseja receber seu pedido
+                    </BoxDescription>
+                  </div>
+                </BoxDescriptionContainer>
+                <EnderecoGrid>
+                  <Input
+                    value={cep}
+                    onChange={(e) => updateCep(e.target.value)}
+                    maxLength={8}
+                    startColumn={1}
+                    endColumn={7}
+                    placeholder="CEP"
+                  ></Input>
+                  {cepInvalido && (
+                    <ErrorMessage startColumn={1} endColumn={7} startRow={2}>
+                      Cep inválido!
+                    </ErrorMessage>
+                  )}
+                  <Input
+                    value={rua}
+                    readOnly
+                    startColumn={1}
+                    endColumn={16}
+                    placeholder="Rua"
+                    startRow={3}
+                    disabled
+                  ></Input>
+                  <Input
+                    value={numero}
+                    onChange={(e) => setNumero(e.target.value)}
+                    type="number"
+                    min={0}
+                    startColumn={1}
+                    endColumn={7}
+                    placeholder="Número"
+                  ></Input>
+                  <Input
+                    value={complemento}
+                    onChange={(e) => setComplemento(e.target.value)}
+                    startColumn={7}
+                    endColumn={16}
+                    placeholder="Complemento (Opcional)"
+                  ></Input>
+                  <Input
+                    value={bairro}
+                    readOnly
+                    startColumn={1}
+                    endColumn={7}
+                    placeholder="Bairro"
+                    disabled
+                  ></Input>
+                  <Input
+                    value={cidade}
+                    readOnly
+                    startColumn={7}
+                    endColumn={14}
+                    placeholder="Cidade"
+                    disabled
+                  ></Input>
+                  <Input
+                    value={uf}
+                    readOnly
+                    startColumn={14}
+                    endColumn={16}
+                    placeholder="UF"
+                    disabled
+                  ></Input>
+                </EnderecoGrid>
+              </Box>
+              <Box>
+                <BoxDescriptionContainer>
+                  <CurrencyDollar
+                    size={22}
+                    weight="light"
+                    color={theme.purple}
+                  />
+                  <div>
+                    <BoxTitle>Pagamento</BoxTitle>
+                    <BoxDescription>
+                      O pagamento é feito na entrega. Escolha a forma que deseja
+                      pagar
+                    </BoxDescription>
+                  </div>
+                </BoxDescriptionContainer>
+                <FormasDePagamentoList>
+                  <FormaDePagamento
+                    selected={credito}
+                    onClick={() => selectFormaDePagamento('CREDITO')}
+                  >
+                    <CreditCard size={22} weight="light" color={theme.purple} />
+                    <p>CARTÃO DE CRÉDITO</p>
+                  </FormaDePagamento>
+                  <FormaDePagamento
+                    selected={debito}
+                    onClick={() => selectFormaDePagamento('DEBITO')}
+                  >
+                    <Bank size={22} weight="light" color={theme.purple} />
+                    <p>CARTÃO DE DÉBITO</p>
+                  </FormaDePagamento>
+                  <FormaDePagamento
+                    selected={dinheiro}
+                    onClick={() => selectFormaDePagamento('DINHEIRO')}
+                  >
+                    <Money size={22} weight="light" color={theme.purple} />
+                    <p>DINHEIRO</p>
+                  </FormaDePagamento>
+                </FormasDePagamentoList>
+              </Box>
+            </DadosContainer>
+          )}
           <SelectedCoffeesContainer>
             <SubTitle>Cafés selecionados</SubTitle>
             {carrinho.length > 0 ? (

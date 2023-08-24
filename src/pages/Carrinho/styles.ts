@@ -226,4 +226,15 @@ export const ConfirmarButton = styled.button`
   &:hover {
     background-color: ${(props) => props.theme['yellow-dark']};
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+`
+export const NotLoggedMessage = styled.div`
+  font-family: 'Roboto', sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
