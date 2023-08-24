@@ -8,19 +8,27 @@ export const HeaderContainer = styled.header`
   font-family: 'Roboto', sans-serif;
   padding: 2rem 10rem;
 
-  > div {
+  > nav {
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    a {
+      text-decoration: none;
+      color: ${(props) => props.theme['yellow-dark']};
+    }
   }
 
   @media (max-width: 800px) {
     padding: 2rem;
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 600px) {
     flex-direction: column;
-    gap: 1rem;
+    gap: 4rem;
+    > nav {
+      flex-direction: column;
+    }
   }
 `
 

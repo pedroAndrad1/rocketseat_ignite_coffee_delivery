@@ -6,7 +6,7 @@ import {
   LoginButton,
 } from './styles'
 import logo from '../../assets/logo.svg'
-import { User, ShoppingCart } from 'phosphor-react'
+import { User, ShoppingCart, Wrench } from 'phosphor-react'
 import { useCarrinhoContext } from '../../contexts/CarrinhoContext'
 import { useKeycloak } from '@react-keycloak/web'
 import { useCallback, useEffect, useState } from 'react'
@@ -56,7 +56,7 @@ const Header = () => {
       <NavLink to="/">
         <img src={logo} alt="Café Coffee Delivery"></img>
       </NavLink>
-      <div>
+      <nav>
         <LoginButton
           onClick={loginLogout}
           data-tooltip-id="login"
@@ -69,6 +69,14 @@ const Header = () => {
             ? 'Login'
             : `Bem vindo, ${usuario?.firstName}`}
         </LoginButton>
+        {keycloak.hasRealmRole('CoffeeDeliveryAdmin') && (
+          <NavLink to={'/admin'}>
+            <LoginButton>
+              <Wrench size={22} weight="fill" color="#8047F8"></Wrench>
+              Ferramentas de admin
+            </LoginButton>
+          </NavLink>
+        )}
         <NavLink to="/carrinho">
           <CarrinhoContainer>
             <ShoppingCart size={22} weight="fill" color="#DBAC2C" />
@@ -77,7 +85,7 @@ const Header = () => {
             )}
           </CarrinhoContainer>
         </NavLink>
-      </div>
+      </nav>
     </HeaderContainer>
   )
 }
