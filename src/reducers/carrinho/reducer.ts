@@ -24,7 +24,7 @@ export const carrinhoReducer = (state:CarrinhoItem[], action: CarrinhoAction) =>
                 if(action.payload){
                     if(carrinhoItemIndex >= 0){
                         if(draft[carrinhoItemIndex].amount !=  action.payload.amount){
-                            success('Carrinho atualizado!')
+                            if(action.payload.toast) success('Carrinho atualizado!')
                         }
                         draft[carrinhoItemIndex] = action.payload;
                     }

@@ -18,11 +18,11 @@ const SelectedCoffee = ({ coffee, amount }: SelectedCoffeeProps) => {
     }
 
     const increaseItem = () => {
-        adicionar(coffee, amount as number + 1);
+        adicionar(coffee, amount as number + 1, false);
     }
 
     const decreaseItem = () => {
-        adicionar(coffee, amount as number - 1);
+        adicionar(coffee, amount as number - 1, false);
     }
 
     return (

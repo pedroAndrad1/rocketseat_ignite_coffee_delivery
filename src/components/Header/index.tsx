@@ -22,7 +22,7 @@ const Header = () => {
                     <CarrinhoContainer>
                         <ShoppingCart size={22} weight="fill" color="#DBAC2C" />
                        {
-                        carrinho.length > 0 &&  <CarrinhoAmount>{carrinho.length}</CarrinhoAmount>
+                        carrinho && carrinho.length > 0 &&  <CarrinhoAmount>{carrinho.length}</CarrinhoAmount>
                        }
                     </CarrinhoContainer>
                 </NavLink>

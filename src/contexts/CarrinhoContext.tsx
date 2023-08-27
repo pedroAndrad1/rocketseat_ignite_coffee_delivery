@@ -5,7 +5,8 @@ import { carrinhoReducer } from "../reducers/carrinho/reducer";
 
 export interface CarrinhoItem {
     coffee: Coffee,
-    amount?: number
+    amount?: number,
+    toast?: boolean
 }
 
 export interface Endereco {
@@ -19,7 +20,7 @@ interface CarrinhoContextData {
     endereco: Endereco,
     formaPagamento: 'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro',
     pagamentoConfirmado: boolean,
-    adicionar: (coffee: Coffee, amount: number) => void,
+    adicionar: (coffee: Coffee, amount: number, toast?: boolean) => void,
     remover: (coffee: Coffee) => void,
     adicionarEndereco: (endereco: Endereco) => void,
     adicionarFormaPagamento:
@@ -43,8 +44,8 @@ export function CarrinhoContextProvider({ children }: CarrinhoContextProps) {
         useState<'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro'>('Cartão de crédito');
     const [pagamentoConfirmado, setPagamentoConfirmado] = useState(false);
 
-    const adicionar = (coffee: Coffee, amount: number) =>
-        dispatchCarrinho(adicionarCarrinhoAction(coffee, amount));
+    const adicionar = (coffee: Coffee, amount: number, toast = true) =>
+        dispatchCarrinho(adicionarCarrinhoAction(coffee, amount, toast));
 
     const remover = (coffee: Coffee) =>
         dispatchCarrinho(removerCarrinhoAction(coffee));

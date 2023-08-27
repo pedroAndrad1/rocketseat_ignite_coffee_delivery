@@ -175,7 +175,7 @@ const Carrinho = () => {
                     <SelectedCoffeesContainer>
                         <SubTitle>Cafés selecionados</SubTitle>
                         {
-                            carrinho.length > 0 ?
+                            carrinho && carrinho.length > 0 ?
                                 <SelectedCoffees>
                                     {
                                         carrinho.map((carrinhoItem, i) => {
