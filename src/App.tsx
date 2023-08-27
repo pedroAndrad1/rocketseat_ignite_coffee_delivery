@@ -8,8 +8,14 @@ import { GlobalStyle } from './styles/global'
 import { theme } from './styles/theme'
 import { ToastContainer } from 'react-toastify'
 import { CompraConfirmadaGuard } from './Guards/CompraConfirmadaGuard'
+import { GuardedRoute } from './Guards/GuardedRoute'
+import { Admin } from './pages/Admin'
+import { useKeycloak } from '@react-keycloak/web'
+import { AdicionarProduto } from './pages/Admin/AdicionarProduto'
 
 function App() {
+  const { keycloak } = useKeycloak()
+
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer />
@@ -17,12 +23,26 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route path="/" element={<Home />}></Route>
-              <Route path="/carrinho" element={<Carrinho />}></Route>
+              <Route path="/" element={<Home />} />
+              <Route path="/carrinho" element={<Carrinho />} />
               <Route
                 path="/compra-confirmada/:id_compra"
                 element={<CompraConfirmadaGuard />}
-              ></Route>
+              />
+              <Route
+                path="admin"
+                element={
+                  <GuardedRoute
+                    auth={keycloak.hasRealmRole('CoffeeDeliveryAdmin')}
+                  />
+                }
+              >
+                <Route path="" element={<Admin />} />
+                <Route
+                  path="adicionar-produto"
+                  element={<AdicionarProduto />}
+                />
+              </Route>
             </Route>
           </Routes>
         </BrowserRouter>

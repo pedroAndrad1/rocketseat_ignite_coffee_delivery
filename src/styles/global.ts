@@ -11,9 +11,10 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         background-color: ${(props) => props.theme.background} ;
+        font-family: 'Roboto', 'sans-serif' ;
     }
 
-    button{
+    button, a{
         background-color: inherit;
         cursor: pointer;
 
@@ -21,4 +22,18 @@ export const GlobalStyle = createGlobalStyle`
             cursor: not-allowed ;
         }
     }
+
+    
+    a{
+        text-decoration: none;
+        color:${(props) => props.theme['base-text']}
+    }
+
+    h1 {
+        font-size: 2rem;
+        color: ${(props) => props.theme['base-title']};
+        margin-bottom: 2rem;
+    }
+
+
 `

@@ -29,6 +29,7 @@ export const HeaderContainer = styled.header`
     > nav {
       flex-direction: column;
     }
+    padding: 5%;
   }
 `
 

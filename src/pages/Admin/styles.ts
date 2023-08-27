@@ -20,6 +20,10 @@ export const AdminMain = styled.main`
       padding: 1rem;
       border-radius: 8px;
       background-color: ${(props) => props.theme['base-card']};
+
+      &:hover {
+        filter: brightness(0.8);
+      }
     }
   }
 `

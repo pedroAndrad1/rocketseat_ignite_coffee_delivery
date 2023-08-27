@@ -41,6 +41,10 @@ export const ItemsContainer = styled.div`
   font-weight: 400;
   color: ${(props) => props.theme['base-text']};
   gap: 1rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 `
 interface ItemProps {
   iconContainerColor: string
@@ -79,6 +83,7 @@ export const SectionTitle = styled.h2`
   font-size: 2rem;
   color: ${(props) => props.theme['base-subtitle']};
   margin-bottom: 2rem;
+  text-align: left;
 `
 
 export const CoffeList = styled.section`
@@ -92,5 +97,14 @@ export const CoffeList = styled.section`
 
   @media (min-width: 1440px) {
     grid-template-columns: repeat(4, 1fr);
+  }
+`
+
+export const ProductsListContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 300px) {
+    align-items: center;
   }
 `

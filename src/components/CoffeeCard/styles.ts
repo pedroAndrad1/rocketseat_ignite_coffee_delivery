@@ -10,7 +10,10 @@ export const Card = styled.div`
   padding: 0 1rem 1rem 1rem;
   position: relative;
   gap: 1rem;
-  min-width: 256px;
+
+  @media (max-width: 300px) {
+    padding: 1rem 0;
+  }
 `
 
 export const CoffeeImage = styled.img`
@@ -60,6 +63,10 @@ export const CardActions = styled.div`
   gap: 0.5rem;
   width: 100%;
   margin-top: 1rem;
+
+  @media (max-width: 300px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 export const CoffeeValue = styled.span`

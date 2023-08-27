@@ -9,6 +9,7 @@ import {
   Title,
   SectionTitle,
   CoffeList,
+  ProductsListContainer,
 } from './styles'
 import IntroImage from '../../assets/cafe_banner_home.svg'
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
@@ -68,14 +69,14 @@ const Home = () => {
         ></IntroImg>
       </IntroContainer>
       <Container>
-        <main>
+        <ProductsListContainer>
           <SectionTitle>Nossos cafés</SectionTitle>
           <CoffeList>
             {COFFEE_DATA.map((coffee, i) => (
               <CoffeeCard {...coffee} key={`coffee_${i}`}></CoffeeCard>
             ))}
           </CoffeList>
-        </main>
+        </ProductsListContainer>
       </Container>
     </HomeWrapper>
   )

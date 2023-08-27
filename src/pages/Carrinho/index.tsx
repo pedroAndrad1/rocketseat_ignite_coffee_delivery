@@ -13,13 +13,11 @@ import {
   BoxDescriptionContainer,
   BoxTitle,
   CarrinhoForm,
-  ConfirmarButton,
   DadosContainer,
   EnderecoGrid,
   ErrorMessage,
   FormaDePagamento,
   FormasDePagamentoList,
-  Input,
   NoCoffee,
   NotLoggedMessage,
   SelectedCoffees,
@@ -35,6 +33,8 @@ import useToast from '../../custom-hooks/useToast'
 import { useNavigate } from 'react-router-dom'
 import { useCarrinhoContext } from '../../contexts/CarrinhoContext'
 import { useKeycloak } from '@react-keycloak/web'
+import { Input } from '../../components/FormComponents/Input'
+import { SubmitButton } from '../../components/FormComponents/SubmitButton'
 
 const Carrinho = () => {
   const { keycloak } = useKeycloak()
@@ -318,9 +318,7 @@ const Carrinho = () => {
                     ></Currency>
                   </span>
                 </Valores>
-                <ConfirmarButton type="submit">
-                  Confirmar pedido
-                </ConfirmarButton>
+                <SubmitButton>Confirmar pedido</SubmitButton>
               </SelectedCoffees>
             ) : (
               <NoCoffee>Por favor, selecione um produto!</NoCoffee>

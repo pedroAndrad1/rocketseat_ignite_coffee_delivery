@@ -1,3 +1,4 @@
+import { NavLink, Outlet } from 'react-router-dom'
 import Container from '../../components/Container'
 import { AdminMain } from './styles'
 
@@ -7,7 +8,7 @@ export const Admin = () => {
       <AdminMain>
         <h1>Ferramentas de administrador</h1>
         <nav>
-          <a>Adicionar produto</a>
+          <NavLink to="adicionar-produto">Adicionar produto</NavLink>
           <a>Alterar produto</a>
           <a>Inativar produto</a>
         </nav>

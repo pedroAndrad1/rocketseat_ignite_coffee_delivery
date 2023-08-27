@@ -73,45 +73,6 @@ export const EnderecoGrid = styled.div`
   margin-top: 3rem;
 `
 
-interface InputProps {
-  startColumn?: number
-  endColumn?: number
-  startRow?: number
-  endRow?: number
-}
-export const Input = styled.input<InputProps>`
-  background-color: ${(props) => props.theme['base-input']};
-  border: 1px solid ${(props) => props.theme['base-button']};
-  border-radius: 4px;
-  color: ${(props) => props.theme['base-text']};
-  padding: 0.75rem;
-  font-family: 'Roboto';
-  font-weight: 400;
-  font-size: 0.75rem;
-  line-height: 130%;
-  display: inline-block;
-
-  &:focus {
-    outline: none !important;
-    border: 1px solid ${(props) => props.theme.yellow};
-  }
-
-  &:disabled {
-    filter: brightness(0.9);
-    cursor: not-allowed;
-  }
-
-  grid-column-start: ${(props) => props.startColumn};
-  grid-column-end: ${(props) => props.endColumn};
-  grid-row-start: ${(props) => props.startRow};
-  grid-row-end: ${(props) => props.endRow};
-
-  @media (max-width: 600px) {
-    grid-column-start: 1;
-    grid-column-end: 16;
-  }
-`
-
 interface ErrorMessageProps {
   startColumn?: number
   endColumn?: number
@@ -211,26 +172,6 @@ export const Valores = styled.div`
   }
 `
 
-export const ConfirmarButton = styled.button`
-  background-color: ${(props) => props.theme.yellow};
-  border-radius: 6px;
-  color: ${(props) => props.theme.white};
-  font-family: 'Roboto';
-  font-weight: 700;
-  font-size: 0.8rem;
-  line-height: 160%;
-  text-transform: uppercase;
-  padding: 0.8rem 0.5rem;
-  width: 100%;
-
-  &:hover {
-    background-color: ${(props) => props.theme['yellow-dark']};
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-`
 export const NotLoggedMessage = styled.div`
   font-family: 'Roboto', sans-serif;
 
