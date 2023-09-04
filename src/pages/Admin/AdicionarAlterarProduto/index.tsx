@@ -10,6 +10,7 @@ import useToast from '../../../custom-hooks/useToast'
 import { GENERIC_ERROR_MESSAGE } from '../../../constants/error-messages'
 import { Produto } from '../../../interfaces'
 import { useParams } from 'react-router-dom'
+import { Loading } from '../../../components/Loading'
 
 export const AdicionarAlterarProduto = () => {
   const { produtoId } = useParams()
@@ -81,12 +82,12 @@ export const AdicionarAlterarProduto = () => {
   }
 
   return (
-    <Container>
-      <main>
-        {loading ? (
-          <div>Carregando...</div>
-        ) : (
-          <>
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Container>
+          <main>
             <h1>{produto ? 'Alterar Produto' : 'Adicionar Produto'}</h1>
             <AddProdutoForm onSubmit={handleSubmit}>
               <div>
@@ -111,7 +112,8 @@ export const AdicionarAlterarProduto = () => {
                 <label htmlFor="preco">Preço:</label>
                 <Input
                   type="number"
-                  step=".01"
+                  step=".1"
+                  min={0}
                   value={produto.preco}
                   onChange={(e) =>
                     handleValuesChange(
@@ -153,9 +155,9 @@ export const AdicionarAlterarProduto = () => {
                 Confirmar
               </SubmitButton>
             </AddProdutoForm>
-          </>
-        )}
-      </main>
-    </Container>
+          </main>
+        </Container>
+      )}
+    </>
   )
 }

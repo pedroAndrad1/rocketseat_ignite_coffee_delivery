@@ -50,7 +50,7 @@ function App() {
                   element={<AdicionarAlterarProduto />}
                 />
                 <Route
-                  path="alterar-produto"
+                  path="alterar-produto/:produtoId"
                   element={<AdicionarAlterarProduto />}
                 />
               </Route>
