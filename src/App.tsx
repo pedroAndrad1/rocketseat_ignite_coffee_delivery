@@ -7,14 +7,16 @@ import Home from './pages/Home'
 import { GlobalStyle } from './styles/global'
 import { theme } from './styles/theme'
 import { ToastContainer } from 'react-toastify'
-import { CompraConfirmadaGuard } from './Guards/CompraConfirmadaGuard'
-import { GuardedRoute } from './Guards/GuardedRoute'
+import { GuardedRoute } from './guards/GuardedRoute'
 import { Admin } from './pages/Admin'
 import { useKeycloak } from '@react-keycloak/web'
-import { AdicionarProduto } from './pages/Admin/AdicionarProduto'
+import { AdicionarAlterarProduto } from './pages/Admin/AdicionarAlterarProduto'
+import { useCarrinhoContext } from './contexts/CarrinhoContext'
+import CompraConfirmada from './pages/CompraConfirmada'
 
 function App() {
   const { keycloak } = useKeycloak()
+  const { pagamentoConfirmado } = useCarrinhoContext()
 
   return (
     <ThemeProvider theme={theme}>
@@ -27,8 +29,13 @@ function App() {
               <Route path="/carrinho" element={<Carrinho />} />
               <Route
                 path="/compra-confirmada/:id_compra"
-                element={<CompraConfirmadaGuard />}
-              />
+                element={<GuardedRoute auth={pagamentoConfirmado} />}
+              >
+                <Route
+                  path=""
+                  element={<CompraConfirmada></CompraConfirmada>}
+                ></Route>
+              </Route>
               <Route
                 path="admin"
                 element={
@@ -40,7 +47,11 @@ function App() {
                 <Route path="" element={<Admin />} />
                 <Route
                   path="adicionar-produto"
-                  element={<AdicionarProduto />}
+                  element={<AdicionarAlterarProduto />}
+                />
+                <Route
+                  path="alterar-produto"
+                  element={<AdicionarAlterarProduto />}
                 />
               </Route>
             </Route>
