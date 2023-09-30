@@ -5,7 +5,6 @@ import { TextArea } from '../../../components/FormComponents/TextArea'
 import Container from '../../../components/Container'
 import { SubmitButton } from '../../../components/FormComponents/SubmitButton'
 import { useProdutos } from '../../../custom-hooks/useProdutos'
-import keycloak from '../../../keycloak'
 import useToast from '../../../custom-hooks/useToast'
 import { GENERIC_ERROR_MESSAGE } from '../../../constants/error-messages'
 import { Produto } from '../../../interfaces'
@@ -62,7 +61,7 @@ export const AdicionarAlterarProduto = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    saveProduto(produto, keycloak.token)
+    saveProduto(produto)
       .then(() => {
         success('Produto salvo!')
         cleanFormFields()

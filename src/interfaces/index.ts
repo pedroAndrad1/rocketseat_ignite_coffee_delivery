@@ -7,3 +7,9 @@ export interface Produto {
   imageUrl: string
   ativo?: boolean
 }
+
+export interface GetProdutosAdminResponse {
+  produtos: {
+    content: Produto[]
+  }
+}

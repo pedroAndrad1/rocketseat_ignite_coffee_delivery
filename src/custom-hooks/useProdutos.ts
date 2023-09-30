@@ -1,6 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web'
 import { api } from '../api/axios'
-import { Produto } from '../interfaces'
+import { GetProdutosAdminResponse, Produto } from '../interfaces'
 
 export const useProdutos = () => {
   const { keycloak } = useKeycloak()
@@ -22,7 +22,7 @@ export const useProdutos = () => {
   }
 
   const getProdutos = () => {
-    return api.post(' /produtos/admin', {
+    return api.get<GetProdutosAdminResponse>('/produtos', {
       headers: mountHeaders(keycloak.token),
     })
   }

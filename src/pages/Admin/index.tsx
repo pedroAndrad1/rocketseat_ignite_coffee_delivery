@@ -9,7 +9,7 @@ export const Admin = () => {
         <h1>Ferramentas de administrador</h1>
         <nav>
           <NavLink to="adicionar-produto">Adicionar produto</NavLink>
-          <NavLink to="alterar-produto/1">Alterar produto</NavLink>
+          <NavLink to="alterar-produto">Alterar produto</NavLink>
           <NavLink to="invativar-produto">Inativar produto</NavLink>
         </nav>
       </AdminMain>

@@ -13,6 +13,7 @@ import { useKeycloak } from '@react-keycloak/web'
 import { AdicionarAlterarProduto } from './pages/Admin/AdicionarAlterarProduto'
 import { useCarrinhoContext } from './contexts/CarrinhoContext'
 import CompraConfirmada from './pages/CompraConfirmada'
+import { AlterarProduto } from './pages/Admin/AlterarProduto'
 
 function App() {
   const { keycloak } = useKeycloak()
@@ -49,6 +50,7 @@ function App() {
                   path="adicionar-produto"
                   element={<AdicionarAlterarProduto />}
                 />
+                <Route path="alterar-produto" element={<AlterarProduto />} />
                 <Route
                   path="alterar-produto/:produtoId"
                   element={<AdicionarAlterarProduto />}
