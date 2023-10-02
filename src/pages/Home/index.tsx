@@ -8,24 +8,39 @@ import {
   SubTitle,
   Title,
   SectionTitle,
-  CoffeList,
+  ProdutoList,
   ProductsListContainer,
 } from './styles'
 import IntroImage from '../../assets/cafe_banner_home.svg'
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 import { theme } from '../../styles/theme'
-import CoffeeCard from '../../components/CoffeeCard'
-import { COFFEE_DATA } from '../../data/coffee-data'
+import ProdutoCard from '../../components/ProdutoCard'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useProdutos } from '../../custom-hooks/useProdutos'
+import { Produto } from '../../interfaces'
+import { Loading } from '../../components/Loading'
 
 const Home = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const { getProdutos } = useProdutos()
+  const [produtos, setProdutos] = useState<Produto[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (location.pathname !== '/') navigate('/')
-  }, [navigate, location])
+
+    const handleProdutos = async () => {
+      await getProdutos()
+        .then((res) => setProdutos(res.data.produtos.content))
+        .finally(() => setLoading(true))
+    }
+
+    if (loading) {
+      handleProdutos()
+    }
+  }, [navigate, location, getProdutos, loading])
 
   return (
     <HomeWrapper>
@@ -70,12 +85,18 @@ const Home = () => {
       </IntroContainer>
       <Container>
         <ProductsListContainer>
-          <SectionTitle>Nossos cafés</SectionTitle>
-          <CoffeList>
-            {COFFEE_DATA.map((coffee, i) => (
-              <CoffeeCard {...coffee} key={`coffee_${i}`}></CoffeeCard>
-            ))}
-          </CoffeList>
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              <SectionTitle>Nossos cafés</SectionTitle>
+              <ProdutoList>
+                {produtos.map((produto, i) => (
+                  <ProdutoCard {...produto} key={`produto_${i}`}></ProdutoCard>
+                ))}
+              </ProdutoList>
+            </>
+          )}
         </ProductsListContainer>
       </Container>
     </HomeWrapper>

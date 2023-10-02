@@ -4,34 +4,29 @@ import {
   BuyButton,
   Card,
   CardActions,
-  CoffeeDescription,
-  CoffeeImage,
-  CoffeeTitle,
-  CoffeeType,
-  CoffeeTypes,
-  CoffeeValue,
+  ProdutoDescription,
+  ProdutoImage,
+  ProdutoTitle,
+  ProdutoType,
+  ProdutoTypes,
+  ProdutoValue,
 } from './styles'
 import { theme } from '../../styles/theme'
 import Counter from '../Counter'
 import { useCarrinhoContext } from '../../contexts/CarrinhoContext'
-import { Coffee } from '../../data/coffee-data'
+import { Produto } from '../../interfaces'
+import { usePreco } from '../../custom-hooks/usePreco'
 
-interface CoffeeCardProps {
-  src: string
-  types: string[]
-  title: string
-  description: string
-  value: string
-}
-
-const CoffeeCard = ({
-  src,
-  types,
-  title,
-  description,
-  value,
-}: CoffeeCardProps) => {
+const ProdutoCard = ({
+  id,
+  nome,
+  descricao,
+  imageUrl,
+  preco,
+  tipo,
+}: Produto) => {
   const { adicionar } = useCarrinhoContext()
+  const { formatPreco } = usePreco()
   const [counter, setCounter] = useState(1)
 
   const decreaseCounter = () => {
@@ -43,24 +38,29 @@ const CoffeeCard = ({
   }
 
   const addToCarrinho = () => {
-    const coffee: Coffee = { src, types, title, description, value }
-    adicionar(coffee, counter)
+    const produto: Produto = {
+      id,
+      nome,
+      descricao,
+      imageUrl,
+      preco,
+      tipo,
+    }
+    adicionar(produto, counter)
   }
 
   return (
     <Card>
-      <CoffeeImage src={src} alt="Xicára de café"></CoffeeImage>
-      <CoffeeTypes>
-        {types.map((type, i) => (
-          <CoffeeType key={`type_${i}`}>{type}</CoffeeType>
+      <ProdutoImage src={imageUrl} alt="Foto do produto"></ProdutoImage>
+      <ProdutoTypes>
+        {tipo.map((tipo, i) => (
+          <ProdutoType key={`type_${i}`}>{tipo}</ProdutoType>
         ))}
-      </CoffeeTypes>
-      <CoffeeTitle>{title}</CoffeeTitle>
-      <CoffeeDescription>{description}</CoffeeDescription>
+      </ProdutoTypes>
+      <ProdutoTitle>{nome}</ProdutoTitle>
+      <ProdutoDescription>{descricao}</ProdutoDescription>
       <CardActions>
-        <CoffeeValue>
-          R$ <span>{value.replace('.', ',')}</span>
-        </CoffeeValue>
+        <ProdutoValue>{formatPreco(preco)}</ProdutoValue>
         <Counter
           counterValue={counter}
           onIncrease={increaseCounter}
@@ -73,4 +73,4 @@ const CoffeeCard = ({
     </Card>
   )
 }
-export default CoffeeCard
+export default ProdutoCard

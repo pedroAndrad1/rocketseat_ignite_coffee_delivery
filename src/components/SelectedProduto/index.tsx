@@ -1,6 +1,5 @@
 import { Trash } from 'phosphor-react'
 import { useCarrinhoContext } from '../../contexts/CarrinhoContext'
-import { Coffee } from '../../data/coffee-data'
 import { theme } from '../../styles/theme'
 import Counter from '../Counter'
 import {
@@ -10,33 +9,36 @@ import {
   CarrinhoItemValue,
   InfosContainer,
   RemoverButton,
-  SelectedCoffeeImage,
+  SelectedProdutoImage,
 } from './styles'
+import { Produto } from '../../interfaces'
+import { usePreco } from '../../custom-hooks/usePreco'
 
-interface SelectedCoffeeProps {
-  coffee: Coffee
+interface SelectedProdutoProps {
+  produto: Produto
   amount: number
 }
-const SelectedCoffee = ({ coffee, amount }: SelectedCoffeeProps) => {
+const SelectedProduto = ({ produto, amount }: SelectedProdutoProps) => {
   const { adicionar, remover } = useCarrinhoContext()
+  const { formatPreco } = usePreco()
 
   const removerItem = () => {
-    remover(coffee)
+    remover(produto)
   }
 
   const increaseItem = () => {
-    adicionar(coffee, (amount as number) + 1)
+    adicionar(produto, (amount as number) + 1)
   }
 
   const decreaseItem = () => {
-    adicionar(coffee, (amount as number) - 1)
+    adicionar(produto, (amount as number) - 1)
   }
 
   return (
     <CarrinhoItemContainer>
-      <SelectedCoffeeImage src={coffee.src} alt="Imagem de uma xícara" />
+      <SelectedProdutoImage src={produto.imageUrl} alt="Imagem de uma xícara" />
       <InfosContainer>
-        <CarrinhoItemTitle>{coffee.title}</CarrinhoItemTitle>
+        <CarrinhoItemTitle>{produto.nome}</CarrinhoItemTitle>
         <ActionsContainer>
           <CarrinhoItemTitle></CarrinhoItemTitle>
           <Counter
@@ -50,8 +52,8 @@ const SelectedCoffee = ({ coffee, amount }: SelectedCoffeeProps) => {
           </RemoverButton>
         </ActionsContainer>
       </InfosContainer>
-      <CarrinhoItemValue>R${coffee.value.replace('.', ',')}</CarrinhoItemValue>
+      <CarrinhoItemValue>{formatPreco(produto.preco)}</CarrinhoItemValue>
     </CarrinhoItemContainer>
   )
 }
-export default SelectedCoffee
+export default SelectedProduto

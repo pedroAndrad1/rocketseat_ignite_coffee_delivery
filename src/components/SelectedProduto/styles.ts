@@ -50,7 +50,7 @@ export const RemoverButton = styled.button`
   }
 `
 
-export const SelectedCoffeeImage = styled.img`
+export const SelectedProdutoImage = styled.img`
   height: 64px;
   width: 64px;
 `

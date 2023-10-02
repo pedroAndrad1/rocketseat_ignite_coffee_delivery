@@ -8,26 +8,39 @@ import { useProdutos } from '../../../custom-hooks/useProdutos'
 import useToast from '../../../custom-hooks/useToast'
 import { GENERIC_ERROR_MESSAGE } from '../../../constants/error-messages'
 import { Produto } from '../../../interfaces'
-import { useParams } from 'react-router-dom'
+import { useParams, redirect } from 'react-router-dom'
 import { Loading } from '../../../components/Loading'
 
 export const AdicionarAlterarProduto = () => {
   const { produtoId } = useParams()
-  const { mountNewProduct } = useProdutos()
+  const { mountNewProduct, getProduto } = useProdutos()
+  const { saveProduto } = useProdutos()
+  const { error, success } = useToast()
   const [produto, setProduto] = useState<Produto>(mountNewProduct())
   const [loading, setLoading] = useState(true)
   const [tiposProxy, setTiposProxy] = useState('')
 
   useEffect(() => {
-    if (produtoId) {
-      // pegar produto a partir do id
+    const handleAlterar = async () =>
+      await getProduto(produtoId as string)
+        .then(
+          ({ data: { id, nome, descricao, imageUrl, preco, tipo, ativo } }) => {
+            setProduto({ id, nome, descricao, imageUrl, preco, tipo, ativo })
+            setTiposProxy(tipo.join(' '))
+          },
+        )
+        .catch(() => {
+          error(GENERIC_ERROR_MESSAGE)
+          return redirect('admin/alterar-produto')
+        })
+        .finally(() => setLoading(false))
+
+    if (produtoId && !produto.id) {
+      handleAlterar()
     } else {
       setLoading(false)
     }
-  }, [produtoId])
-
-  const { saveProduto } = useProdutos()
-  const { error, success } = useToast()
+  }, [produtoId, getProduto, error, produto.id])
 
   const handleValuesChange = (
     keyName: string,
@@ -61,8 +74,14 @@ export const AdicionarAlterarProduto = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    saveProduto(produto)
+    saveProduto(produto, produtoId ? { update: true } : undefined)
       .then(() => {
+        if (produtoId) {
+          console.log('redirect')
+          success('Produto salvo!')
+
+          return redirect('/admin')
+        }
         success('Produto salvo!')
         cleanFormFields()
       })

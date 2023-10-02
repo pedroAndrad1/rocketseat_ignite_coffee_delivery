@@ -51,13 +51,13 @@ export const BoxDescription = styled.p`
   line-height: 130%;
   color: ${(props) => props.theme['base-text']};
 `
-export const SelectedCoffeesContainer = styled.div`
+export const SelectedProdutosContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
 `
 
-export const SelectedCoffees = styled.div`
+export const SelectedProdutos = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -138,7 +138,7 @@ export const FormaDePagamento = styled.div<FormaDePagamentoProps>`
   }}
 `
 
-export const NoCoffee = styled.p`
+export const NoProduto = styled.p`
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   color: ${(props) => props.theme['base-text']};

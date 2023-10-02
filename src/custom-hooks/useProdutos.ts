@@ -11,18 +11,31 @@ export const useProdutos = () => {
     }
   }
 
-  const saveProduto = (produtoRaw: Produto) => {
+  const saveProduto = (produtoRaw: Produto, options?: { update: boolean }) => {
     const produto = {
       ...produtoRaw,
       ativo: true,
     }
-    return api.post('/produtos', produto, {
+
+    if (options?.update) {
+      return api.put('/produtos', produto, {
+        headers: mountHeaders(keycloak.token),
+      })
+    } else {
+      return api.post('/produtos', produto, {
+        headers: mountHeaders(keycloak.token),
+      })
+    }
+  }
+
+  const getProdutos = () => {
+    return api.get<GetProdutosAdminResponse>('/produtos?size=99999', {
       headers: mountHeaders(keycloak.token),
     })
   }
 
-  const getProdutos = () => {
-    return api.get<GetProdutosAdminResponse>('/produtos', {
+  const getProduto = (id: string) => {
+    return api.get<Produto>(`/produtos/${id}`, {
       headers: mountHeaders(keycloak.token),
     })
   }
@@ -41,5 +54,6 @@ export const useProdutos = () => {
     saveProduto,
     mountNewProduct,
     getProdutos,
+    getProduto,
   }
 }

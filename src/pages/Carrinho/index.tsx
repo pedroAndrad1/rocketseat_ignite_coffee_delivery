@@ -18,16 +18,16 @@ import {
   ErrorMessage,
   FormaDePagamento,
   FormasDePagamentoList,
-  NoCoffee,
+  NoProduto,
   NotLoggedMessage,
-  SelectedCoffees,
-  SelectedCoffeesContainer,
+  SelectedProdutos,
+  SelectedProdutosContainer,
   SubTitle,
   Valores,
 } from './styles'
 import useCorreios from '../../custom-hooks/useCorreios'
 import { FormEvent, useState } from 'react'
-import SelectedCoffee from '../../components/SelectedCoffee'
+import SelectedProduto from '../../components/SelectedProduto'
 import Currency from 'react-currency-formatter'
 import useToast from '../../custom-hooks/useToast'
 import { useNavigate } from 'react-router-dom'
@@ -111,8 +111,7 @@ const Carrinho = () => {
     return carrinho.reduce((accumulate, currentValue) => {
       return (
         accumulate +
-        Number.parseFloat(currentValue.coffee.value) *
-          (currentValue.amount as number)
+        currentValue.produto.preco * (currentValue.amount as number)
       )
     }, 0)
   }
@@ -287,17 +286,17 @@ const Carrinho = () => {
               </Box>
             </DadosContainer>
           )}
-          <SelectedCoffeesContainer>
+          <SelectedProdutosContainer>
             <SubTitle>Cafés selecionados</SubTitle>
             {carrinho.length > 0 ? (
-              <SelectedCoffees>
+              <SelectedProdutos>
                 {carrinho.map((carrinhoItem, i) => {
                   return (
-                    <SelectedCoffee
-                      key={`selected_coffee_${i}`}
-                      coffee={carrinhoItem.coffee}
+                    <SelectedProduto
+                      key={`selected_produto_${i}`}
+                      produto={carrinhoItem.produto}
                       amount={carrinhoItem.amount as number}
-                    ></SelectedCoffee>
+                    ></SelectedProduto>
                   )
                 })}
                 <Valores>
@@ -319,11 +318,11 @@ const Carrinho = () => {
                   </span>
                 </Valores>
                 <SubmitButton>Confirmar pedido</SubmitButton>
-              </SelectedCoffees>
+              </SelectedProdutos>
             ) : (
-              <NoCoffee>Por favor, selecione um produto!</NoCoffee>
+              <NoProduto>Por favor, selecione um produto!</NoProduto>
             )}
-          </SelectedCoffeesContainer>
+          </SelectedProdutosContainer>
         </CarrinhoForm>
       </main>
     </Container>

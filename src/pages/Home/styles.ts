@@ -86,7 +86,7 @@ export const SectionTitle = styled.h2`
   text-align: left;
 `
 
-export const CoffeList = styled.section`
+export const ProdutoList = styled.section`
   display: grid;
   gap: 1rem;
   margin-bottom: 4rem;

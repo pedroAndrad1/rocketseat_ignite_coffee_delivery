@@ -16,18 +16,20 @@ export const Card = styled.div`
   }
 `
 
-export const CoffeeImage = styled.img`
+export const ProdutoImage = styled.img`
   margin-top: -1rem;
+  width: 100px;
+  height: 100px;
 `
 
-export const CoffeeTypes = styled.div`
+export const ProdutoTypes = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
 `
 
-export const CoffeeType = styled.span`
+export const ProdutoType = styled.span`
   background-color: ${(props) => props.theme['yellow-light']};
   border-radius: 100px;
   color: ${(props) => props.theme['yellow-dark']};
@@ -38,7 +40,7 @@ export const CoffeeType = styled.span`
   padding: 0.4rem;
 `
 
-export const CoffeeTitle = styled.h3`
+export const ProdutoTitle = styled.h3`
   font-family: 'Baloo 2', sans-serif;
   font-weight: 700;
   font-size: 1.3rem;
@@ -48,7 +50,7 @@ export const CoffeeTitle = styled.h3`
   white-space: nowrap;
 `
 
-export const CoffeeDescription = styled.p`
+export const ProdutoDescription = styled.p`
   color: ${(props) => props.theme['base-label']};
   font-family: 'Roboto';
   font-weight: 400;
@@ -69,7 +71,7 @@ export const CardActions = styled.div`
   }
 `
 
-export const CoffeeValue = styled.span`
+export const ProdutoValue = styled.span`
   display: flex;
   align-items: center;
   font-family: 'Roboto';

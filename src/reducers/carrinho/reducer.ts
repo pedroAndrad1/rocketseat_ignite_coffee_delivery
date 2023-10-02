@@ -20,7 +20,7 @@ export const CarrinhoReducer = (
   const { success } = useToast()
   const carrinhoItemIndex = state.findIndex(
     (carrinhoItem) =>
-      carrinhoItem.coffee.title === action.payload?.coffee.title,
+      carrinhoItem.produto.nome === action.payload?.produto.nome,
   )
 
   switch (action.type) {

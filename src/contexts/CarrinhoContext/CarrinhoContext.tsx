@@ -1,14 +1,14 @@
 import { createContext, ReactNode, useReducer, useState } from 'react'
-import { Coffee } from '../../data/coffee-data'
 import {
   adicionarCarrinhoAction,
   removerCarrinhoAction,
   limparCarrinhoAction,
 } from '../../reducers/carrinho/actions'
 import { CarrinhoReducer } from '../../reducers/carrinho/reducer'
+import { Produto } from '../../interfaces'
 
 export interface CarrinhoItem {
-  coffee: Coffee
+  produto: Produto
   amount?: number
 }
 
@@ -23,8 +23,8 @@ interface CarrinhoContextData {
   endereco: Endereco
   formaPagamento: 'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro'
   pagamentoConfirmado: boolean
-  adicionar: (coffee: Coffee, amount: number) => void
-  remover: (coffee: Coffee) => void
+  adicionar: (produto: Produto, amount: number) => void
+  remover: (produto: Produto) => void
   adicionarEndereco: (endereco: Endereco) => void
   adicionarFormaPagamento: (
     formaPagamento: 'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro',
@@ -48,11 +48,11 @@ export function CarrinhoContextProvider({ children }: CarrinhoContextProps) {
   >('Cartão de crédito')
   const [pagamentoConfirmado, setPagamentoConfirmado] = useState(false)
 
-  const adicionar = (coffee: Coffee, amount: number) =>
-    dispatchCarrinho(adicionarCarrinhoAction(coffee, amount))
+  const adicionar = (produto: Produto, amount: number) =>
+    dispatchCarrinho(adicionarCarrinhoAction(produto, amount))
 
-  const remover = (coffee: Coffee) =>
-    dispatchCarrinho(removerCarrinhoAction(coffee))
+  const remover = (produto: Produto) =>
+    dispatchCarrinho(removerCarrinhoAction(produto))
 
   const adicionarEndereco = (endereco: Endereco) => setEndereco(endereco)
 
