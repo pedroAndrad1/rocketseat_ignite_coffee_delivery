@@ -11,6 +11,7 @@ export enum CarrinhoActionsEnum {
 export interface CarrinhoAction {
   type: CarrinhoActionsEnum
   payload?: CarrinhoItem
+  options?: { noToast: boolean }
 }
 
 export const CarrinhoReducer = (
@@ -29,12 +30,12 @@ export const CarrinhoReducer = (
         if (action.payload) {
           if (carrinhoItemIndex >= 0) {
             if (draft[carrinhoItemIndex].amount !== action.payload.amount) {
-              success('Carrinho atualizado!')
+              if (!action.options?.noToast) success('Carrinho atualizado!')
             }
             draft[carrinhoItemIndex] = action.payload
           } else {
             draft.push(action.payload)
-            success('Adicionado ao carrinho!')
+            if (!action.options?.noToast) success('Adicionado ao carrinho!')
           }
         }
       })

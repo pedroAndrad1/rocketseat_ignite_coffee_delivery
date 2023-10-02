@@ -23,8 +23,12 @@ interface CarrinhoContextData {
   endereco: Endereco
   formaPagamento: 'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro'
   pagamentoConfirmado: boolean
-  adicionar: (produto: Produto, amount: number) => void
-  remover: (produto: Produto) => void
+  adicionar: (
+    produto: Produto,
+    amount: number,
+    options?: { noToast: boolean },
+  ) => void
+  remover: (produto: Produto, options?: { noToast: boolean }) => void
   adicionarEndereco: (endereco: Endereco) => void
   adicionarFormaPagamento: (
     formaPagamento: 'Cartão de crédito' | 'Cartão de débito' | 'Dinheiro',
@@ -48,11 +52,14 @@ export function CarrinhoContextProvider({ children }: CarrinhoContextProps) {
   >('Cartão de crédito')
   const [pagamentoConfirmado, setPagamentoConfirmado] = useState(false)
 
-  const adicionar = (produto: Produto, amount: number) =>
-    dispatchCarrinho(adicionarCarrinhoAction(produto, amount))
+  const adicionar = (
+    produto: Produto,
+    amount: number,
+    options?: { noToast: boolean },
+  ) => dispatchCarrinho(adicionarCarrinhoAction(produto, amount, options))
 
-  const remover = (produto: Produto) =>
-    dispatchCarrinho(removerCarrinhoAction(produto))
+  const remover = (produto: Produto, options?: { noToast: boolean }) =>
+    dispatchCarrinho(removerCarrinhoAction(produto, options))
 
   const adicionarEndereco = (endereco: Endereco) => setEndereco(endereco)
 

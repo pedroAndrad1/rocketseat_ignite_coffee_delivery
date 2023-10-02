@@ -27,11 +27,11 @@ const SelectedProduto = ({ produto, amount }: SelectedProdutoProps) => {
   }
 
   const increaseItem = () => {
-    adicionar(produto, (amount as number) + 1)
+    adicionar(produto, (amount as number) + 1, { noToast: true })
   }
 
   const decreaseItem = () => {
-    adicionar(produto, (amount as number) - 1)
+    adicionar(produto, (amount as number) - 1, { noToast: true })
   }
 
   return (
