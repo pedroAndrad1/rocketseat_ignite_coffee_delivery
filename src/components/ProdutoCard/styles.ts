@@ -71,20 +71,14 @@ export const CardActions = styled.div`
   }
 `
 
-export const ProdutoValue = styled.span`
+export const ProdutoValue = styled.strong`
   display: flex;
   align-items: center;
-  font-family: 'Roboto';
-  font-weight: 400;
-  font-size: 0.75rem;
+  font-family: 'Baloo 2';
+  font-weight: 800;
+  font-size: 1.5rem;
   line-height: 130%;
   color: ${(props) => props.theme['base-text']};
-
-  span {
-    font-family: 'Baloo 2';
-    font-size: 1.5rem;
-    font-weight: 800;
-  }
 `
 
 export const BuyButton = styled.button`
