@@ -34,7 +34,7 @@ const Home = () => {
     const handleProdutos = async () => {
       await getProdutos()
         .then((res) => setProdutos(res.data.produtos.content))
-        .finally(() => setLoading(true))
+        .finally(() => setLoading(false))
     }
 
     if (loading) {
