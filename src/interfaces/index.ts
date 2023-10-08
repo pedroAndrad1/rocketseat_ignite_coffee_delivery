@@ -13,3 +13,9 @@ export interface GetProdutosAdminResponse {
     content: Produto[]
   }
 }
+
+export interface InventarioItem {
+  id?: string
+  skuCode: string
+  quantity: number
+}

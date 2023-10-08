@@ -1,17 +1,21 @@
 import { useKeycloak } from '@react-keycloak/web'
 import { api } from '../api/axios'
-import { GetProdutosAdminResponse, Produto } from '../interfaces'
+import {
+  GetProdutosAdminResponse,
+  InventarioItem,
+  Produto,
+} from '../interfaces'
+import { useHeaders } from './useHeaders'
 
 export const useProdutos = () => {
   const { keycloak } = useKeycloak()
+  const { mountHeaders } = useHeaders()
 
-  const mountHeaders = (token: string | undefined) => {
-    return {
-      Authorization: 'Bearer ' + token,
-    }
-  }
-
-  const saveProduto = (produtoRaw: Produto, options?: { update: boolean }) => {
+  const saveProduto = (
+    produtoRaw: Produto,
+    quantity = 10,
+    options?: { update: boolean },
+  ) => {
     const produto = {
       ...produtoRaw,
       ativo: true,
@@ -22,10 +26,27 @@ export const useProdutos = () => {
         headers: mountHeaders(keycloak.token),
       })
     } else {
-      return api.post('/produtos', produto, {
-        headers: mountHeaders(keycloak.token),
-      })
+      return handleSaveNewProduto(produto, quantity)
     }
+  }
+
+  const handleSaveNewProduto = async (newProduto: Produto, quantity = 10) => {
+    const produtosResponse = await api.post<Produto>('/produtos', newProduto, {
+      headers: mountHeaders(keycloak.token),
+    })
+
+    if (!produtosResponse.data.id) {
+      throw new Error('Erro ao salvar produto')
+    }
+
+    const inventarioItem: InventarioItem = {
+      skuCode: produtosResponse.data.id,
+      quantity,
+    }
+
+    return api.post('/inventario', inventarioItem, {
+      headers: mountHeaders(keycloak.token),
+    })
   }
 
   const getProdutos = () => {
