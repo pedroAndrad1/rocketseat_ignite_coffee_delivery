@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom'
-import { Produto } from '../../interfaces'
+import { Produto } from '../../../../interfaces'
 import { ProdutoItem, ProdutosList } from './styles'
-import imageDefault from '../../assets/default-image.jpg'
-import { usePreco } from '../../custom-hooks/usePreco'
+import imageDefault from '../../../../assets/default-image.jpg'
+import { usePreco } from '../../../../custom-hooks/usePreco'
 
 interface ProdutosToManageListProps {
   produtos: Produto[]

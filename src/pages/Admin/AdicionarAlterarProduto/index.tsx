@@ -74,7 +74,7 @@ export const AdicionarAlterarProduto = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    saveProduto(produto, produtoId ? { update: true } : undefined)
+    saveProduto(produto, 10, produtoId ? { update: true } : undefined)
       .then(() => {
         if (produtoId) {
           console.log('redirect')
@@ -87,7 +87,7 @@ export const AdicionarAlterarProduto = () => {
       })
       .catch((err) => {
         error(
-          err.response.data.message
+          err.response && err.response.data.message && err.response.data.message
             ? err.response.data.message
             : GENERIC_ERROR_MESSAGE,
         )

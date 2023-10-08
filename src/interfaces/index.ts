@@ -19,3 +19,17 @@ export interface InventarioItem {
   skuCode: string
   quantity: number
 }
+
+export interface GetInventarioAdminResponse {
+  _embedded: {
+    inventarioDataList: InventarioItem[]
+  }
+}
+
+export interface InventarioWithProduto {
+  inventarioId: string
+  produtoId: string
+  produtoNome: string
+  produtoImageUrl: string
+  quantity: number
+}

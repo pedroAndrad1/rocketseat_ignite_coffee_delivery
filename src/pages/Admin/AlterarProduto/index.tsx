@@ -5,7 +5,7 @@ import { useProdutos } from '../../../custom-hooks/useProdutos'
 import useToast from '../../../custom-hooks/useToast'
 import { GENERIC_ERROR_MESSAGE } from '../../../constants/error-messages'
 import { Loading } from '../../../components/Loading'
-import { ProdutosToManageList } from '../../../components/ProdutosToManageList'
+import { ProdutosToManageList } from './ProdutosToManageList'
 
 export const AlterarProduto = () => {
   const { getProdutos } = useProdutos()
@@ -19,7 +19,7 @@ export const AlterarProduto = () => {
         .then((res) => setProdutos(res.data.produtos.content))
         .catch((err) =>
           error(
-            err.response.data.message
+            err.response && err.response.data && err.response.data.message
               ? err.response.data.message
               : GENERIC_ERROR_MESSAGE,
           ),

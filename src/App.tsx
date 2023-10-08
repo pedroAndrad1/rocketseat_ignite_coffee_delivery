@@ -7,13 +7,14 @@ import Home from './pages/Home'
 import { GlobalStyle } from './styles/global'
 import { theme } from './styles/theme'
 import { ToastContainer } from 'react-toastify'
-import { GuardedRoute } from './guards/GuardedRoute'
+import { GuardedRoute } from './Guards/GuardedRoute'
 import { Admin } from './pages/Admin'
 import { useKeycloak } from '@react-keycloak/web'
 import { AdicionarAlterarProduto } from './pages/Admin/AdicionarAlterarProduto'
 import { useCarrinhoContext } from './contexts/CarrinhoContext'
 import CompraConfirmada from './pages/CompraConfirmada'
 import { AlterarProduto } from './pages/Admin/AlterarProduto'
+import { AlterarInventario } from './pages/Admin/AlterarInventario'
 
 function App() {
   const { keycloak } = useKeycloak()
@@ -54,6 +55,10 @@ function App() {
                 <Route
                   path="alterar-produto/:produtoId"
                   element={<AdicionarAlterarProduto />}
+                />
+                <Route
+                  path="alterar-inventario"
+                  element={<AlterarInventario />}
                 />
               </Route>
             </Route>
