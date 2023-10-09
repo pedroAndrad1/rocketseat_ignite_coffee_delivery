@@ -30,15 +30,15 @@ export const ProdutoItem = styled.li`
   }
 
   ul {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
 
     color: ${(props) => props.theme['base-text']};
 
     li {
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 1rem;
     }
@@ -48,6 +48,17 @@ export const ProdutoItem = styled.li`
     grid-template-columns: 1fr;
     img {
       margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+    img {
+      margin: 0 auto;
+    }
+
+    ul {
+      grid-template-columns: 1fr;
     }
   }
 `

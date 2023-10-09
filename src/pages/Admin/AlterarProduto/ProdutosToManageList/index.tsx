@@ -30,14 +30,16 @@ export const ProdutosToManageList = ({
                 onError={handleImageError}
               />
               <ul>
-                <li>{produto.nome}</li>
+                <li>
+                  <strong>{produto.nome}</strong>
+                </li>
                 <li>{formatPreco(produto.preco)}</li>
                 <ul>
                   {produto.tipo.map((tipo, i) => (
                     <li key={`ProdutoItem__tipo__${i}`}>{tipo}</li>
                   ))}
                 </ul>
-                <li>{produto.ativo ? 'Ativo' : 'Inativo'}</li>
+                {/* <li>{produto.ativo ? 'Ativo' : 'Inativo'}</li> */}
               </ul>
             </ProdutoItem>
           </NavLink>

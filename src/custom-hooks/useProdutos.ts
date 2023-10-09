@@ -1,6 +1,7 @@
 import { useKeycloak } from '@react-keycloak/web'
 import { api } from '../api/axios'
 import {
+  GetAllProdutosAdminResponse,
   GetProdutosAdminResponse,
   InventarioItem,
   Produto,
@@ -13,12 +14,11 @@ export const useProdutos = () => {
 
   const saveProduto = (
     produtoRaw: Produto,
-    quantity = 10,
-    options?: { update: boolean },
+    options?: { update?: boolean; quantity?: number },
   ) => {
     const produto = {
       ...produtoRaw,
-      ativo: true,
+      ativo: options?.update ? produtoRaw.ativo : true,
     }
 
     if (options?.update) {
@@ -26,7 +26,7 @@ export const useProdutos = () => {
         headers: mountHeaders(keycloak.token),
       })
     } else {
-      return handleSaveNewProduto(produto, quantity)
+      return handleSaveNewProduto(produto, options?.quantity || 10)
     }
   }
 
@@ -45,6 +45,12 @@ export const useProdutos = () => {
     }
 
     return api.post('/inventario', inventarioItem, {
+      headers: mountHeaders(keycloak.token),
+    })
+  }
+
+  const getAllProdutos = () => {
+    return api.get<GetAllProdutosAdminResponse>('/produtos/admin', {
       headers: mountHeaders(keycloak.token),
     })
   }
@@ -71,10 +77,22 @@ export const useProdutos = () => {
     }
   }
 
+  const ativarInativarProduto = (id: string) => {
+    return api.patch<Produto>(
+      `/produtos/${id}`,
+      {},
+      {
+        headers: mountHeaders(keycloak.token),
+      },
+    )
+  }
+
   return {
     saveProduto,
     mountNewProduct,
+    getAllProdutos,
     getProdutos,
     getProduto,
+    ativarInativarProduto,
   }
 }

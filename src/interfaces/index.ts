@@ -33,3 +33,27 @@ export interface InventarioWithProduto {
   produtoImageUrl: string
   quantity: number
 }
+
+export interface PedidoItem {
+  id: number
+  codigoSku: string
+  preco: number
+  quantidade: number
+  pedidoData: string
+}
+
+export interface Pedido {
+  id?: number
+  pedidoNumero: string
+  linhaItemPedidoDataList: {
+    _embedded: {
+      linhaItemPedidoDataList: PedidoItem[]
+    }
+  }
+}
+
+export interface GetAllProdutosAdminResponse {
+  _embedded: {
+    produtoDataList: Produto[]
+  }
+}

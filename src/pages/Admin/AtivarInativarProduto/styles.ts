@@ -1,6 +1,15 @@
 import styled from 'styled-components'
 
-export const StyledInventarioListItem = styled.li`
+export const AtivarInativarList = styled.ul`
+  display: grid;
+  gap: 2rem;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  width: 75%;
+  margin: 0 auto;
+`
+
+export const AtivarInativarListItem = styled.li`
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 1rem;
@@ -17,19 +26,13 @@ export const StyledInventarioListItem = styled.li`
 
   ul {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
     align-items: center;
     color: ${(props) => props.theme['base-text']};
 
-    li:first-child {
+    li {
       text-align: center;
-    }
-
-    form {
-      display: grid;
-      gap: 0.5rem;
-      grid-template-columns: 1fr 1fr;
     }
   }
 
@@ -44,11 +47,12 @@ export const StyledInventarioListItem = styled.li`
     }
   }
 `
-export const InventarioListItemSubmitButton = styled.button`
+export const AtivarInativarUpdateButton = styled.button`
   background-color: ${(props) => props.theme.yellow};
   border-radius: 6px;
   color: ${(props) => props.theme.white};
   font-weight: 700;
   font-size: 0.8rem;
   text-transform: uppercase;
+  padding: 1rem;
 `

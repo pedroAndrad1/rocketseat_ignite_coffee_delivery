@@ -28,18 +28,22 @@ import {
 import useCorreios from '../../custom-hooks/useCorreios'
 import { FormEvent, useState } from 'react'
 import SelectedProduto from '../../components/SelectedProduto'
-import Currency from 'react-currency-formatter'
 import useToast from '../../custom-hooks/useToast'
 import { useNavigate } from 'react-router-dom'
 import { useCarrinhoContext } from '../../contexts/CarrinhoContext'
 import { useKeycloak } from '@react-keycloak/web'
 import { Input } from '../../components/FormComponents/Input'
 import { SubmitButton } from '../../components/FormComponents/SubmitButton'
+import { usePreco } from '../../custom-hooks/usePreco'
+import { usePedidos } from '../../custom-hooks/usePedidos'
+import { GENERIC_ERROR_MESSAGE } from '../../constants/error-messages'
 
 const Carrinho = () => {
   const { keycloak } = useKeycloak()
   const { findByCep } = useCorreios()
   const { error } = useToast()
+  const { formatPreco } = usePreco()
+  const { savePedido } = usePedidos()
   const {
     carrinho,
     adicionarEndereco,
@@ -137,14 +141,23 @@ const Carrinho = () => {
           complemento: complemento || '',
         })
         addFormaPagamento()
-        confirmarPagamento()
-        navigate(`/compra-confirmada/${Math.floor(Math.random() * 100)}`)
+        savePedido()
+          .then((res) => {
+            console.log(res)
+            confirmarPagamento()
+
+            navigate(`/compra-confirmada/${Math.floor(Math.random() * 100)}`)
+          })
+          .catch((err) => {
+            console.log(err)
+            error(GENERIC_ERROR_MESSAGE)
+          })
       } else {
         error('Campos inválidos ou incompletos!')
       }
     } else {
       error(
-        'Atualmente só fazemos entregas no estado do Rio de Janeiro. Em breve entregaremos no seu estado!',
+        'Atualmente só fazemos entregas no estado do Rio de Janeiro. Em breve entregaremos no seu estado :)',
       )
     }
   }
@@ -301,21 +314,11 @@ const Carrinho = () => {
                 })}
                 <Valores>
                   <span>Total de itens</span>
-                  <span>
-                    <Currency
-                      quantity={somaValores()}
-                      currency="BRL"
-                    ></Currency>
-                  </span>
+                  <span>{formatPreco(somaValores())}</span>
                   <span>Entrega</span>
                   <span>R$3,50</span>
                   <span>Total</span>
-                  <span>
-                    <Currency
-                      quantity={somaValores() + 3.5}
-                      currency="BRL"
-                    ></Currency>
-                  </span>
+                  <span>{formatPreco(somaValores() + 3.5)}</span>
                 </Valores>
                 <SubmitButton>Confirmar pedido</SubmitButton>
               </SelectedProdutos>

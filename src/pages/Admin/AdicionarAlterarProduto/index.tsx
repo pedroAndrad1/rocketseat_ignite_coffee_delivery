@@ -74,7 +74,7 @@ export const AdicionarAlterarProduto = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    saveProduto(produto, 10, produtoId ? { update: true } : undefined)
+    saveProduto(produto, produtoId ? { update: true } : { quantity: 10 })
       .then(() => {
         if (produtoId) {
           console.log('redirect')

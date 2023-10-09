@@ -15,6 +15,7 @@ import { useCarrinhoContext } from './contexts/CarrinhoContext'
 import CompraConfirmada from './pages/CompraConfirmada'
 import { AlterarProduto } from './pages/Admin/AlterarProduto'
 import { AlterarInventario } from './pages/Admin/AlterarInventario'
+import { AtivarInativarProduto } from './pages/Admin/AtivarInativarProduto'
 
 function App() {
   const { keycloak } = useKeycloak()
@@ -59,6 +60,10 @@ function App() {
                 <Route
                   path="alterar-inventario"
                   element={<AlterarInventario />}
+                />
+                <Route
+                  path="invativar-produto"
+                  element={<AtivarInativarProduto />}
                 />
               </Route>
             </Route>
