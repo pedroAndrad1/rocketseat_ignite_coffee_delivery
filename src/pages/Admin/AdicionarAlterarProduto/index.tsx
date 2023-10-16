@@ -78,7 +78,7 @@ export const AdicionarAlterarProduto = () => {
     saveProduto(produto, produtoId ? { update: true } : { quantity: 10 })
       .then(() => {
         if (produtoId) {
-          navigate('/admin')
+          navigate('/admin/alterar-produto')
         }
         success('Produto salvo!')
         cleanFormFields()
