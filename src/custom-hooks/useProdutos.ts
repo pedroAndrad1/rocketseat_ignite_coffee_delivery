@@ -79,7 +79,7 @@ export const useProdutos = () => {
 
   const ativarInativarProduto = (id: string) => {
     return api.patch<Produto>(
-      `/produtos/${id}`,
+      `/produtos/toggle-status-produto/${id}`,
       {},
       {
         headers: mountHeaders(keycloak.token),

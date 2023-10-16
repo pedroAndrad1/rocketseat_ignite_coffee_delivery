@@ -8,7 +8,7 @@ import { useProdutos } from '../../../custom-hooks/useProdutos'
 import useToast from '../../../custom-hooks/useToast'
 import { GENERIC_ERROR_MESSAGE } from '../../../constants/error-messages'
 import { Produto } from '../../../interfaces'
-import { useParams, redirect } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Loading } from '../../../components/Loading'
 
 export const AdicionarAlterarProduto = () => {
@@ -16,6 +16,7 @@ export const AdicionarAlterarProduto = () => {
   const { mountNewProduct, getProduto } = useProdutos()
   const { saveProduto } = useProdutos()
   const { error, success } = useToast()
+  const navigate = useNavigate()
   const [produto, setProduto] = useState<Produto>(mountNewProduct())
   const [loading, setLoading] = useState(true)
   const [tiposProxy, setTiposProxy] = useState('')
@@ -31,7 +32,7 @@ export const AdicionarAlterarProduto = () => {
         )
         .catch(() => {
           error(GENERIC_ERROR_MESSAGE)
-          return redirect('admin/alterar-produto')
+          return navigate('admin/alterar-produto')
         })
         .finally(() => setLoading(false))
 
@@ -40,7 +41,7 @@ export const AdicionarAlterarProduto = () => {
     } else {
       setLoading(false)
     }
-  }, [produtoId, getProduto, error, produto.id])
+  }, [produtoId, getProduto, error, produto.id, navigate])
 
   const handleValuesChange = (
     keyName: string,
@@ -77,10 +78,7 @@ export const AdicionarAlterarProduto = () => {
     saveProduto(produto, produtoId ? { update: true } : { quantity: 10 })
       .then(() => {
         if (produtoId) {
-          console.log('redirect')
-          success('Produto salvo!')
-
-          return redirect('/admin')
+          navigate('/admin')
         }
         success('Produto salvo!')
         cleanFormFields()
