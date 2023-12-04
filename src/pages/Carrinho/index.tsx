@@ -43,7 +43,7 @@ const Carrinho = () => {
   const { findByCep } = useCorreios()
   const { error } = useToast()
   const { formatPreco } = usePreco()
-  const { savePedido } = usePedidos()
+  const { savePedido, getPedidos } = usePedidos()
   const {
     carrinho,
     adicionarEndereco,
@@ -109,6 +109,7 @@ const Carrinho = () => {
         setDinheiro(true)
       }
     }
+    addFormaPagamento()
   }
 
   const somaValores = () => {
@@ -122,6 +123,14 @@ const Carrinho = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
+    // addFormaPagamento()
+    // confirmarPagamento()
+
+    // setTimeout(() => {
+    //   navigate(`/compra-confirmada/${Math.floor(Math.random() * 100)}`)
+    // }, 50)
+
+    // return
 
     if (!keycloak.authenticated) {
       error('Por favor, faça login antes de continuar.')
@@ -140,10 +149,8 @@ const Carrinho = () => {
           numero,
           complemento: complemento || '',
         })
-        addFormaPagamento()
         savePedido()
-          .then((res) => {
-            console.log(res)
+          .then(() => {
             confirmarPagamento()
 
             navigate(`/compra-confirmada/${Math.floor(Math.random() * 100)}`)

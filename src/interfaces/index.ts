@@ -8,7 +8,7 @@ export interface Produto {
   ativo?: boolean
 }
 
-export interface GetProdutosAdminResponse {
+export interface GetProdutosResponse {
   produtos: {
     content: Produto[]
   }
@@ -32,14 +32,13 @@ export interface InventarioWithProduto {
   produtoNome: string
   produtoImageUrl: string
   quantity: number
+  status: 'ativo' | 'inativo'
 }
 
 export interface PedidoItem {
-  id: number
   codigoSku: string
   preco: number
   quantidade: number
-  pedidoData: string
 }
 
 export interface Pedido {
@@ -56,4 +55,36 @@ export interface GetAllProdutosAdminResponse {
   _embedded: {
     produtoDataList: Produto[]
   }
+}
+
+export interface PedidoItemLinhaItemPedidoResponse {
+  codigoSku: string
+  preco: number
+  quantidade: number
+}
+
+interface PedidoItemResponse {
+  id: number
+  pedidoNumero: string
+  createdAt: string
+  linhaItemPedidoDataList: {
+    _embedded: {
+      linhaItemPedidoDataList: PedidoItemLinhaItemPedidoResponse[]
+    }
+  }
+}
+
+export interface GetPedidosResponse {
+  _embedded: {
+    pedidoDataList: PedidoItemResponse[]
+  }
+}
+
+export interface PedidoMapped {
+  date: string
+  total: number
+  produtosComprados: {
+    nome: string | undefined
+    quantidade: number
+  }[]
 }

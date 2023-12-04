@@ -16,6 +16,7 @@ import CompraConfirmada from './pages/CompraConfirmada'
 import { AlterarProduto } from './pages/Admin/AlterarProduto'
 import { AlterarInventario } from './pages/Admin/AlterarInventario'
 import { AtivarInativarProduto } from './pages/Admin/AtivarInativarProduto'
+import { HistoricoPedidos } from './pages/Admin/HistoricoPedidos'
 
 function App() {
   const { keycloak } = useKeycloak()
@@ -24,52 +25,51 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer />
-      <CarrinhoContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/carrinho" element={<Carrinho />} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/carrinho" element={<Carrinho />} />
+            <Route
+              path="/compra-confirmada/:id_compra"
+              element={<GuardedRoute auth={pagamentoConfirmado} />}
+            >
               <Route
-                path="/compra-confirmada/:id_compra"
-                element={<GuardedRoute auth={pagamentoConfirmado} />}
-              >
-                <Route
-                  path=""
-                  element={<CompraConfirmada></CompraConfirmada>}
-                ></Route>
-              </Route>
-              <Route
-                path="admin"
-                element={
-                  <GuardedRoute
-                    auth={keycloak.hasRealmRole('CoffeeDeliveryAdmin')}
-                  />
-                }
-              >
-                <Route path="" element={<Admin />} />
-                <Route
-                  path="adicionar-produto"
-                  element={<AdicionarAlterarProduto />}
-                />
-                <Route path="alterar-produto" element={<AlterarProduto />} />
-                <Route
-                  path="alterar-produto/:produtoId"
-                  element={<AdicionarAlterarProduto />}
-                />
-                <Route
-                  path="alterar-inventario"
-                  element={<AlterarInventario />}
-                />
-                <Route
-                  path="invativar-produto"
-                  element={<AtivarInativarProduto />}
-                />
-              </Route>
+                path=""
+                element={<CompraConfirmada></CompraConfirmada>}
+              ></Route>
             </Route>
-          </Routes>
-        </BrowserRouter>
-      </CarrinhoContextProvider>
+            <Route
+              path="admin"
+              element={
+                <GuardedRoute
+                  auth={keycloak.hasRealmRole('CoffeeDeliveryAdmin')}
+                />
+              }
+            >
+              <Route path="" element={<Admin />} />
+              <Route
+                path="adicionar-produto"
+                element={<AdicionarAlterarProduto />}
+              />
+              <Route path="alterar-produto" element={<AlterarProduto />} />
+              <Route
+                path="alterar-produto/:produtoId"
+                element={<AdicionarAlterarProduto />}
+              />
+              <Route
+                path="alterar-inventario"
+                element={<AlterarInventario />}
+              />
+              <Route
+                path="invativar-produto"
+                element={<AtivarInativarProduto />}
+              />
+              <Route path="historico-pedidos" element={<HistoricoPedidos />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
       <GlobalStyle></GlobalStyle>
     </ThemeProvider>
   )

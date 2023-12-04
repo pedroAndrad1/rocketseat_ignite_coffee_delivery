@@ -2,8 +2,8 @@ import { useKeycloak } from '@react-keycloak/web'
 import { useHeaders } from './useHeaders'
 import { api } from '../api/axios'
 import {
+  GetAllProdutosAdminResponse,
   GetInventarioAdminResponse,
-  GetProdutosAdminResponse,
   InventarioItem,
   InventarioWithProduto,
   Produto,
@@ -27,15 +27,18 @@ export const useInventario = () => {
   }
 
   const mapInventario = async (inventario: InventarioItem[]) => {
-    const produtos = await api.get<GetProdutosAdminResponse>(
-      '/produtos?size=99999',
+    const produtos = await api.get<GetAllProdutosAdminResponse>(
+      '/produtos/admin',
       {
         headers: mountHeaders(keycloak.token),
       },
     )
     if (!produtos) throw new Error('Erro ao buscar produtos para mapeamento!')
 
-    return mapInventarioWithProduto(inventario, produtos.data.produtos.content)
+    return mapInventarioWithProduto(
+      inventario,
+      produtos.data._embedded.produtoDataList,
+    )
   }
 
   const mapInventarioWithProduto = (
@@ -51,6 +54,7 @@ export const useInventario = () => {
         produtoImageUrl: produto.imageUrl,
         produtoNome: produto.nome,
         quantity: inventarioItem.quantity,
+        status: produto.ativo ? 'ativo' : 'inativo',
       }
 
       return inventarioWithProduto
@@ -59,7 +63,10 @@ export const useInventario = () => {
 
   const findProdutoById = (id: string, produtos: Produto[]) => {
     const produto = produtos.find((produto) => produto.id === id)
-    if (!produto) throw new Error('Inventário tem produto inexistente')
+    if (!produto)
+      throw new Error(
+        `Inventário tem produto inexistente. Id do produto: ${id}`,
+      )
     return produto
   }
 

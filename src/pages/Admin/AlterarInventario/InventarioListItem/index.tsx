@@ -43,7 +43,9 @@ export const InventarioListItem = (inventarioItem: InventarioWithProduto) => {
       />
       <ul>
         <li>
-          <strong>{inventarioItem.produtoNome}</strong>
+          <strong>
+            {inventarioItem.produtoNome} ({inventarioItem.status})
+          </strong>
         </li>
         <li>
           <form onSubmit={handleUpdate}>

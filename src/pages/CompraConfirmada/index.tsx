@@ -19,7 +19,7 @@ const CompraConfirmada = () => {
 
   useEffect(() => {
     limparCarrinho()
-    return () => (renderCounter === 0 ? setRenderCounter(1) : resetCompra())
+    // return () => (renderCounter === 0 ? setRenderCounter(1) : resetCompra())
   }, [renderCounter, limparCarrinho, resetCompra])
 
   return (

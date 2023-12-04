@@ -2,7 +2,7 @@ import { useKeycloak } from '@react-keycloak/web'
 import { api } from '../api/axios'
 import {
   GetAllProdutosAdminResponse,
-  GetProdutosAdminResponse,
+  GetProdutosResponse,
   InventarioItem,
   Produto,
 } from '../interfaces'
@@ -56,9 +56,7 @@ export const useProdutos = () => {
   }
 
   const getProdutos = () => {
-    return api.get<GetProdutosAdminResponse>('/produtos?size=99999', {
-      headers: mountHeaders(keycloak.token),
-    })
+    return api.get<GetProdutosResponse>('/produtos?size=99999')
   }
 
   const getProduto = (id: string) => {

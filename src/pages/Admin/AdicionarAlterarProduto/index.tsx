@@ -104,7 +104,7 @@ export const AdicionarAlterarProduto = () => {
       ) : (
         <Container>
           <main>
-            <h1>{produto ? 'Alterar Produto' : 'Adicionar Produto'}</h1>
+            <h1>{produto.id ? 'Alterar Produto' : 'Adicionar Produto'}</h1>
             <AddProdutoForm onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="nome">Nome:</label>

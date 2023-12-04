@@ -12,6 +12,7 @@ export const Admin = () => {
           <NavLink to="alterar-produto">Alterar produto</NavLink>
           <NavLink to="invativar-produto">Ativar/Inativar produto</NavLink>
           <NavLink to="alterar-inventario">Alterar inventário</NavLink>
+          <NavLink to="historico-pedidos">Histórico de pedidos</NavLink>
         </nav>
       </AdminMain>
     </Container>
